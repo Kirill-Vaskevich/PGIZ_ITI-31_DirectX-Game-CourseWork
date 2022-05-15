@@ -8,6 +8,7 @@ using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using DSharpDX.Engine.Colliders;
 
 namespace DSharpDX.Graphics
 {

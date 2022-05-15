@@ -1,7 +1,7 @@
 ﻿using SharpDX;
 using System;
 
-namespace DSharpDX.Engine
+namespace DSharpDX.Engine.Colliders
 {
     public class SphereCollider : Collider
     {

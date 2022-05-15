@@ -1,6 +1,6 @@
 ﻿using SharpDX;
 
-namespace DSharpDX.Engine
+namespace DSharpDX.Engine.Colliders
 {
     public class CubeCollider : Collider
     {

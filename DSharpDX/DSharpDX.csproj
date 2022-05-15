@@ -67,11 +67,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\ColliderType.cs" />
-    <Compile Include="Engine\Collider.cs" />
-    <Compile Include="Engine\CubeCollider.cs" />
+    <Compile Include="Engine\Colliders\ColliderType.cs" />
+    <Compile Include="Engine\Colliders\Collider.cs" />
+    <Compile Include="Engine\Colliders\CubeCollider.cs" />
     <Compile Include="Engine\GameObject.cs" />
-    <Compile Include="Engine\SphereCollider.cs" />
+    <Compile Include="Engine\Colliders\SphereCollider.cs" />
     <Compile Include="Graphics\Camera\DCamera.cs" />
     <Compile Include="Graphics\Data\DLight.cs" />
     <Compile Include="Graphics\Data\DRenderTexture.cs" />
