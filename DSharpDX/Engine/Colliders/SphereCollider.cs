@@ -24,8 +24,12 @@ namespace DSharpDX.Engine.Colliders
                 float r2 = dx * dx + dy * dy + dz * dz;
 
                 if (r2 <= Math.Pow(_radius, 2))
+                {
+                    Collide = true;
                     return true;
+                }
             }
+            Collide = false;
 
             return false;
         }

@@ -16,7 +16,7 @@ namespace DSharpDX.System
         public DGraphics Graphics { get; private set; }
         public DTimer Timer { get; private set; }
         public DPosition SpherePosition { get; private set; }
-        //public DPosition CameraPosion { get; private set; }
+        public DPosition GroundPosition { get; private set; }
 
         // Constructor
         public DSystem() { }
@@ -50,7 +50,7 @@ namespace DSharpDX.System
                 Graphics = new DGraphics();
                 result = Graphics.Initialize(Configuration, RenderForm.Handle);
             }
-
+            
             // Create and initialize Timer.
             Timer = new DTimer();
             if (!Timer.Initialize())
@@ -61,10 +61,10 @@ namespace DSharpDX.System
 
             // Create the position object.
             SpherePosition = new DPosition();
-            //CameraPosion = new DPosition();
+            GroundPosition = new DPosition();
             // Set the initial position of the viewer to the same as the initial camera position.
             SpherePosition.SetPosition(Graphics.SphereModel.GetPosition());
-            //CameraPosion.SetPosition(Graphics.Camera.GetPosition());
+            GroundPosition.SetPosition(Graphics.GroundModel.GetPosition());
 
             return result;
         }
@@ -103,13 +103,13 @@ namespace DSharpDX.System
             // Update the system stats.
             Timer.Frame2();
 
+            SpherePosition.SetPosition(Graphics.SphereModel.GetPosition());
+
             // Do the frame input processing.
             if (!HandleInput(Timer.FrameTime))
                 return false;
-
             // Get the view point position/rotation.
             // Do the frame processing for the graphics object.
-            //Position.PositionY -= 0.001f;
 
             if (!Graphics.Frame(SpherePosition.X, SpherePosition.Y, SpherePosition.Z, SpherePosition.RotationX, SpherePosition.RotationY, SpherePosition.RotationZ))
                 return false;
@@ -135,8 +135,7 @@ namespace DSharpDX.System
             SpherePosition.LookUp(keydown);
             keydown = Input.IsPageDownPressed();
             SpherePosition.LookDown(keydown);
-            keydown = Input.IsSpacePressed();
-            SpherePosition.MoveUp(keydown);
+            //keydown = Input.Is
 
             return true;
         }

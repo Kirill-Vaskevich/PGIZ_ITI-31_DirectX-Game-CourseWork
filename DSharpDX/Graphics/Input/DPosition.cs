@@ -21,7 +21,7 @@ namespace DSharpDX.Graphics.Input
 
         public DPosition()
         {
-            Speed = 0.03f;
+            Speed = 0.005f;
         }
 
         // Public Methods

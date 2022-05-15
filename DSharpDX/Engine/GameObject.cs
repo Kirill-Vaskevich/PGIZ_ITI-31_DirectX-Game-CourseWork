@@ -8,6 +8,11 @@ namespace DSharpDX.Engine
     {
         public float gravY = 0.0001f;
 
+        public float Speed { get; set; }
+
+        public Vector3 oldPos;
+        public Collider Collider { get; private set; }
+
         public GameObject(ColliderType type)
         {
             if (type == ColliderType.Sphere)
@@ -19,13 +24,26 @@ namespace DSharpDX.Engine
 
         public GameObject() { }
 
-        public Collider Collider { get; private set; }
-
         public override void SetPosition(float x, float y, float z)
         {
-            base.SetPosition(x, y, z);
-            if (Collider != null)
+            if (Collider != null && !Collider.Collide)
+            {
+                oldPos = new Vector3(x, y, z);
+                base.SetPosition(x, y, z);
                 Collider.Position = new Vector3(x, y, z);
+            }
+            else if (Collider != null && Collider.Collide)
+            {
+                Position = oldPos;
+                Collider.Position = new Vector3(x, y, z);
+                return;
+            }
+            base.SetPosition(x, y, z);
+        }
+
+        public void SetPosition(Vector3 pos)
+        {
+            SetPosition(pos.X, pos.Y, pos.Z);
         }
     }
 }

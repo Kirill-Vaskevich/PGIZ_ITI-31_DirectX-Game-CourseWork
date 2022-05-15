@@ -6,6 +6,8 @@ namespace DSharpDX.Engine.Colliders
     {
         public Vector3 Position { get; protected internal set; }
 
+        public bool Collide { get; protected set; }
+
         public Collider(Vector3 pos)
         {
             Position = pos;

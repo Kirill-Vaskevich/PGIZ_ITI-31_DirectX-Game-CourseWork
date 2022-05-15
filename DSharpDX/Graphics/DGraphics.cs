@@ -1,6 +1,5 @@
 ﻿using DSharpDX.Graphics.Camera;
 using DSharpDX.Graphics.Data;
-using DSharpDX.Graphics.Models;
 using DSharpDX.Graphics.Shaders;
 using DSharpDX.System;
 using DSharpDX.Engine;
@@ -25,7 +24,7 @@ namespace DSharpDX.Graphics
 
         #region Models
         private GameObject CubeModel { get; set; }
-        private GameObject GroundModel { get; set; }
+        public GameObject GroundModel { get; set; }
         public GameObject SphereModel { get; set; }
 
         private List<GameObject> _objects;
@@ -89,7 +88,7 @@ namespace DSharpDX.Graphics
                     return false;
 
                 // Set the position for the sphere model.
-                SphereModel.SetPosition(2.0f, 4.0f, 0.0f);
+                SphereModel.SetPosition(2.0f, 2.0f, 0.0f);
 
                 // Create the ground model object.
                 GroundModel = new GameObject();
@@ -148,11 +147,9 @@ namespace DSharpDX.Graphics
         {
 
             // Set the position of the camera.
-            SphereModel.SetPosition(positionX, positionY, positionZ);
-            Camera.SetRotation(rotationX, rotationY, rotationZ);
+            //Camera.SetRotation(rotationX, rotationY, rotationZ);
 
-            if (SphereModel.Collider.IsCollided(CubeModel))
-                MessageBox.Show("Collided");
+            SphereModel.SetPosition(positionX, positionY, positionZ);
 
             // Update the position of the light.
             Light.Position = _lightPosition;
