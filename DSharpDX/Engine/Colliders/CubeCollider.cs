@@ -10,12 +10,12 @@ namespace DSharpDX.Engine.Colliders
         {
             Width = width;
         }
-        
+
         public Vector3[] GetVertices()
         {
             Vector3 min = Position - Width;
             Vector3 max = Position + Width;
-            Vector3[] vertices = new Vector3[14]
+            Vector3[] vertices = new Vector3[18]
             {
                 min, // left fragment
                 new Vector3(min.X, max.Y, min.Z),
@@ -30,7 +30,11 @@ namespace DSharpDX.Engine.Colliders
                 new Vector3(Position.X, min.Y, Position.Z), // front fragment center
                 new Vector3(Position.X, max.Y, Position.Z), // back fragment center
                 new Vector3(Position.X, Position.Y, min.Z), // up fragment center
-                new Vector3(Position.X, Position.Y, max.Z)  // bottom fragment center
+                new Vector3(Position.X, Position.Y, max.Z),  // bottom fragment center
+                new Vector3(min.X, Position.Y, min.Z),
+                new Vector3(min.X, Position.Y, max.Z),
+                new Vector3(max.X, Position.Y, min.Z),
+                new Vector3(max.X, Position.Y, max.Z)
             };
 
             return vertices;

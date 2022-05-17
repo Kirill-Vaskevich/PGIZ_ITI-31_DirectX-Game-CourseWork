@@ -1,6 +1,6 @@
-﻿using DSharpDX.Graphics.Models;
+﻿using DSharpDX.Engine.Colliders;
+using DSharpDX.Graphics.Models;
 using SharpDX;
-using DSharpDX.Engine.Colliders;
 
 namespace DSharpDX.Engine
 {
@@ -34,11 +34,19 @@ namespace DSharpDX.Engine
             }
             else if (Collider != null && Collider.Collide)
             {
-                Position = oldPos;
+                //Position = oldPos;
+                Position = new Vector3(x, y, z);
+
                 Collider.Position = new Vector3(x, y, z);
                 return;
             }
-            base.SetPosition(x, y, z);
+            else
+                base.SetPosition(x, y, z);
+        }
+
+        public void Stop()
+        {
+            Position = oldPos;
         }
 
         public void SetPosition(Vector3 pos)

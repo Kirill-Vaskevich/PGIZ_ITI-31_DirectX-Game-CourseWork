@@ -1,13 +1,12 @@
-﻿using DSharpDX.Graphics.Camera;
+﻿using DSharpDX.Engine;
+using DSharpDX.Engine.Colliders;
+using DSharpDX.Graphics.Camera;
 using DSharpDX.Graphics.Data;
 using DSharpDX.Graphics.Shaders;
 using DSharpDX.System;
-using DSharpDX.Engine;
 using SharpDX;
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using DSharpDX.Engine.Colliders;
 
 namespace DSharpDX.Graphics
 {
@@ -150,6 +149,11 @@ namespace DSharpDX.Graphics
             //Camera.SetRotation(rotationX, rotationY, rotationZ);
 
             SphereModel.SetPosition(positionX, positionY, positionZ);
+
+            if (SphereModel.Collider.IsCollided(CubeModel))
+            {
+                SphereModel.Stop();
+            }
 
             // Update the position of the light.
             Light.Position = _lightPosition;

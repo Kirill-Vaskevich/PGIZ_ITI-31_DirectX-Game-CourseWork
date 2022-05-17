@@ -1,9 +1,9 @@
 ﻿using DSharpDX.Graphics;
 using DSharpDX.Graphics.Input;
 using SharpDX.Windows;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System;
 
 namespace DSharpDX.System
 {
