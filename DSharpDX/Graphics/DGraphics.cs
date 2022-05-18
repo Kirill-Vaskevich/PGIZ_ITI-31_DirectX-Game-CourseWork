@@ -77,7 +77,7 @@ namespace DSharpDX.Graphics
                     return false;
 
                 // Set the position for the cube model.
-                CubeModel.SetPosition(-2.0f, 2.0f, 0.0f);
+                CubeModel.SetPosition(-2.0f, 1.0f, 0.0f);
 
                 // Create the sphere model object.
                 SphereModel = new GameObject(ColliderType.Sphere);
@@ -87,7 +87,7 @@ namespace DSharpDX.Graphics
                     return false;
 
                 // Set the position for the sphere model.
-                SphereModel.SetPosition(2.0f, 2.0f, 0.0f);
+                SphereModel.SetPosition(2.0f, 1.0f, 0.0f);
 
                 // Create the ground model object.
                 GroundModel = new GameObject();
@@ -97,7 +97,7 @@ namespace DSharpDX.Graphics
                     return false;
 
                 // Set the position for the ground model.
-                GroundModel.SetPosition(0.0f, 1.0f, 0.0f);
+                GroundModel.SetPosition(0.0f, -1.0f, 1.0f);
                 #endregion
 
                 #region Data variables.
@@ -142,13 +142,15 @@ namespace DSharpDX.Graphics
                 return false;
             }
         }
-        public bool Frame(float positionX, float positionY, float positionZ, float rotationX, float rotationY, float rotationZ)
+        public bool Frame(Vector3 spherePos, Vector3 sphereRot,
+            Vector3 groundRot)
         {
 
             // Set the position of the camera.
-            //Camera.SetRotation(rotationX, rotationY, rotationZ);
+            Camera.SetRotation(sphereRot);
 
-            SphereModel.SetPosition(positionX, positionY, positionZ);
+            SphereModel.SetPosition(spherePos);
+            GroundModel.SetRotation(groundRot);
 
             if (SphereModel.Collider.IsCollided(CubeModel))
             {
@@ -251,7 +253,7 @@ namespace DSharpDX.Graphics
             // Setup the translation matrix for the sphere model.
             Vector3 spherePosition = SphereModel.GetPosition();
             Matrix.Translation(spherePosition.X, spherePosition.Y, spherePosition.Z, out worldMatrix);
-
+            
             // Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
             SphereModel.Render(D3D.DeviceContext);
             if (!ShadowShader.Render(D3D.DeviceContext, SphereModel.IndexCount, worldMatrix, viewMatrix, projectionMatrix, lightViewMatrix, lightProjectionMatrix, SphereModel.Texture.TextureResource, RenderTexture.ShaderResourceView, Light.Position, Light.AmbientColor, Light.DiffuseColour))
@@ -262,8 +264,9 @@ namespace DSharpDX.Graphics
 
             // Setup the translation matrix for the ground model.
             Vector3 groundPosition = GroundModel.GetPosition();
+            Vector3 groundRotation = GroundModel.GetRotation();
             Matrix.Translation(groundPosition.X, groundPosition.Y, groundPosition.Z, out worldMatrix);
-
+            Matrix.RotationYawPitchRoll(groundRotation.Y, groundRotation.X, groundRotation.Z, out worldMatrix);
             // Render the ground model using the shadow shader.
             GroundModel.Render(D3D.DeviceContext);
             if (!ShadowShader.Render(D3D.DeviceContext, GroundModel.IndexCount, worldMatrix, viewMatrix, projectionMatrix, lightViewMatrix, lightProjectionMatrix, GroundModel.Texture.TextureResource, RenderTexture.ShaderResourceView, Light.Position, Light.AmbientColor, Light.DiffuseColour))
@@ -319,7 +322,9 @@ namespace DSharpDX.Graphics
 
             // Setup the translation matrix for the ground model.
             Vector3 groundPosition = GroundModel.GetPosition();
+            Vector3 groundRotation = GroundModel.GetRotation();
             Matrix.Translation(groundPosition.X, groundPosition.Y, groundPosition.Z, out worldMareix);
+            Matrix.RotationYawPitchRoll(groundRotation.Y, groundRotation.X, groundRotation.Z, out worldMareix);
 
             // Render the ground model with the depth shader.
             GroundModel.Render(D3D.DeviceContext);

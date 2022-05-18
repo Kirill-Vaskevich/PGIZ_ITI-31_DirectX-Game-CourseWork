@@ -196,6 +196,7 @@ namespace DSharpDX.Graphics.Models
             Position.Y = y;
             Position.Z = z;
         }
+
         public Vector3 GetPosition()
         {
             return Position;

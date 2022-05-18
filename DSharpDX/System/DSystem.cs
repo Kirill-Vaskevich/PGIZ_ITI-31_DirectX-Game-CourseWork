@@ -17,6 +17,7 @@ namespace DSharpDX.System
         public DTimer Timer { get; private set; }
         public DPosition SpherePosition { get; private set; }
         public DPosition GroundPosition { get; private set; }
+        public DPosition CameraPos { get; private set; }
 
         // Constructor
         public DSystem() { }
@@ -62,9 +63,11 @@ namespace DSharpDX.System
             // Create the position object.
             SpherePosition = new DPosition();
             GroundPosition = new DPosition();
+            CameraPos = new DPosition();
             // Set the initial position of the viewer to the same as the initial camera position.
             SpherePosition.SetPosition(Graphics.SphereModel.GetPosition());
             GroundPosition.SetPosition(Graphics.GroundModel.GetPosition());
+            CameraPos.SetPosition(Graphics.Camera.GetPosition());
 
             return result;
         }
@@ -104,6 +107,8 @@ namespace DSharpDX.System
             Timer.Frame2();
 
             SpherePosition.SetPosition(Graphics.SphereModel.GetPosition());
+            GroundPosition.SetPosition(Graphics.GroundModel.GetPosition());
+            CameraPos.SetPosition(Graphics.Camera.GetPosition());
 
             // Do the frame input processing.
             if (!HandleInput(Timer.FrameTime))
@@ -111,7 +116,7 @@ namespace DSharpDX.System
             // Get the view point position/rotation.
             // Do the frame processing for the graphics object.
 
-            if (!Graphics.Frame(SpherePosition.X, SpherePosition.Y, SpherePosition.Z, SpherePosition.RotationX, SpherePosition.RotationY, SpherePosition.RotationZ))
+            if (!Graphics.Frame(SpherePosition.GetPosition(), CameraPos.GetRotation(), GroundPosition.GetRotation()))
                 return false;
 
             return true;
@@ -120,7 +125,8 @@ namespace DSharpDX.System
         {
             // Set the frame time for calculating the updated position.
             SpherePosition.FrameTime = frameTime;
-            //CameraPosion.FrameTime = frameTime;
+            GroundPosition.FrameTime = frameTime;
+            CameraPos.FrameTime = frameTime;
 
             // Handle the input
             bool keydown = Input.IsLeftArrowPressed();
@@ -131,11 +137,18 @@ namespace DSharpDX.System
             SpherePosition.MoveForward(keydown);
             keydown = Input.IsDownArrowPressed();
             SpherePosition.MoveBackward(keydown);
-            keydown = Input.IsPageUpPressed();
-            SpherePosition.LookUp(keydown);
-            keydown = Input.IsPageDownPressed();
-            SpherePosition.LookDown(keydown);
-            //keydown = Input.Is
+            keydown = Input.IsSPressed();
+            CameraPos.LookUp(keydown);
+            SpherePosition.MoveBackward(keydown);
+            keydown = Input.IsWPressed();
+            CameraPos.LookDown(keydown);
+            SpherePosition.MoveForward(keydown);
+            keydown = Input.IsAPressed();
+            CameraPos.TurnRight(keydown);
+            SpherePosition.MoveLeft(keydown);
+            keydown = Input.IsDPressed();
+            CameraPos.TurnLeft(keydown);
+            SpherePosition.MoveRight(keydown);
 
             return true;
         }
@@ -145,7 +158,8 @@ namespace DSharpDX.System
 
             // Release the position object.
             SpherePosition = null;
-            //CameraPosion = null;
+            GroundPosition = null;
+            CameraPos = null;
             // Release the Timer object
             Timer = null;
 

@@ -39,5 +39,10 @@ namespace DSharpDX.Engine.Colliders
 
             return vertices;
         }
+
+        public bool IsCollided(GameObject game)
+        {
+            return true;
+        }
     }
 }

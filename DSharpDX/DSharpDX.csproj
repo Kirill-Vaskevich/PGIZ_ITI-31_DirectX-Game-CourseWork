@@ -91,7 +91,9 @@
   <ItemGroup>
     <None Include="Externals\Shaders\depth.ps" />
     <None Include="Externals\Shaders\depth.vs" />
-    <None Include="Externals\Shaders\shadow.ps" />
+    <None Include="Externals\Shaders\shadow.ps">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Externals\Shaders\shadow.vs" />
     <None Include="packages.config" />
   </ItemGroup>

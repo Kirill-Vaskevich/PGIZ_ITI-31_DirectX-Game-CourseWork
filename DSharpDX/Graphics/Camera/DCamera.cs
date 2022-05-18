@@ -5,12 +5,12 @@ namespace DSharpDX.Graphics.Camera
     public class DCamera                    // 63 lines
     {
         // Properties.
-        private float PositionX { get; set; }
-        private float PositionY { get; set; }
-        private float PositionZ { get; set; }
-        private float RotationX { get; set; }
-        private float RotationY { get; set; }
-        private float RotationZ { get; set; }
+        private float X { get; set; }
+        private float Y { get; set; }
+        private float Z { get; set; }
+        private float Pitch { get; set; }
+        private float Yaw { get; set; }
+        private float Roll { get; set; }
         public Matrix ViewMatrix { get; private set; }
 
         // Constructor
@@ -19,32 +19,38 @@ namespace DSharpDX.Graphics.Camera
         // Methods.
         public void SetPosition(float x, float y, float z)
         {
-            PositionX = x;
-            PositionY = y;
-            PositionZ = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
         public void SetRotation(float x, float y, float z)
         {
-            RotationX = x;
-            RotationY = y;
-            RotationZ = z;
+            Pitch = x;
+            Yaw = y;
+            Roll = z;
+        }
+
+        public void SetRotation(Vector3 rot)
+        {
+            SetRotation(rot.X, rot.Y, rot.Z);
         }
         public Vector3 GetPosition()
         {
-            return new Vector3(PositionX, PositionY, PositionZ);
+            return new Vector3(X, Y, Z);
         }
-        public void Render()
+
+        public void RenderOld()
         {
             // Setup the position of the camera in the world.
-            Vector3 position = new Vector3(PositionX, PositionY, PositionZ);
+            Vector3 position = new Vector3(X, Y, Z);
 
             // Setup where the camera is looking  forwardby default.
             Vector3 lookAt = new Vector3(0, -1f, 1.0f);
 
             // Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
-            float pitch = RotationX * 0.0174532925f;
-            float yaw = RotationY * 0.0174532925f;
-            float roll = RotationZ * 0.0174532925f;
+            float pitch = Pitch * 0.0174532925f;
+            float yaw = Yaw * 0.0174532925f;
+            float roll = Roll * 0.0174532925f;
 
             //// Create the rotation matrix from the yaw, pitch, and roll values.
             Matrix rotationMatrix = Matrix.RotationYawPitchRoll(yaw, pitch, roll);
@@ -57,7 +63,31 @@ namespace DSharpDX.Graphics.Camera
             lookAt = position + lookAt;
 
             // Finally create the view matrix from the three updated vectors.
-            ViewMatrix = Matrix.LookAtLH(position, lookAt, up);
+            ViewMatrix = Matrix.LookAtLH(position, lookAt, up)/* * Matrix.Translation(X, Y, Z)*/;
+        }
+
+        public void Render()
+        {
+            // Setup the position of the camera in the world.
+            Vector3 position = new Vector3(X, Y, Z);
+
+            // Setup where the camera is looking  forwardby default.
+            Vector3 lookAt = new Vector3(0, -1f, 1.0f);
+
+            // Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
+            float pitch = Pitch * 0.0174532925f;
+            float yaw = Yaw * 0.0174532925f;
+            float roll = Roll * 0.0174532925f;
+
+            //// Create the rotation matrix from the yaw, pitch, and roll values.
+            Matrix rotationMatrix = Matrix.RotationYawPitchRoll(yaw, pitch, roll);
+
+            // Transform the lookAt and up vector by the rotation matrix so the view is correctly rotated at the origin.
+            position = Vector3.TransformCoordinate(position, rotationMatrix);
+            Vector3 up = Vector3.TransformCoordinate(Vector3.UnitY, rotationMatrix);
+
+            // Finally create the view matrix from the three updated vectors.
+            ViewMatrix = Matrix.LookAtLH(position, lookAt, up)/* * Matrix.Translation(X, Y, Z)*/;
         }
     }
 }

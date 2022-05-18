@@ -13,6 +13,8 @@ namespace DSharpDX.Engine
         public Vector3 oldPos;
         public Collider Collider { get; private set; }
 
+        public Vector3 Rotation;
+
         public GameObject(ColliderType type)
         {
             if (type == ColliderType.Sphere)
@@ -52,6 +54,23 @@ namespace DSharpDX.Engine
         public void SetPosition(Vector3 pos)
         {
             SetPosition(pos.X, pos.Y, pos.Z);
+        }
+
+        public void SetRotation(float x, float y, float z)
+        {
+            Rotation.X = x;
+            Rotation.Y = y;
+            Rotation.Z = z;
+        }
+
+        public void SetRotation(Vector3 rot)
+        {
+            SetRotation(rot.X, rot.Y, rot.Z);
+        }
+
+        public Vector3 GetRotation()
+        {
+            return Rotation;
         }
     }
 }

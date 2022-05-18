@@ -15,13 +15,7 @@ namespace DSharpDX.Engine.Colliders
 
         public virtual bool IsCollided(GameObject gameObject)
         {
-            Vector3 pos = gameObject.Collider.Position;
-
-            if (Position.Y <= pos.Y)
-            {
-                return true;
-            }
-            return false;
+            return true;
         }
     }
 }

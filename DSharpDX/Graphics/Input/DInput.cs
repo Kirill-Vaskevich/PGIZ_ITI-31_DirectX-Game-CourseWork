@@ -236,5 +236,25 @@ namespace DSharpDX.Graphics.Input
         {
             return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.Space);
         }
+
+        public bool IsWPressed()
+        {
+            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.W);
+        }
+
+        public bool IsAPressed()
+        {
+            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.A);
+        }
+
+        public bool IsSPressed()
+        {
+            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.S);
+        }
+
+        public bool IsDPressed()
+        {
+            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.D);
+        }
     }
 }
