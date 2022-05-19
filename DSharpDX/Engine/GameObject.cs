@@ -6,11 +6,10 @@ namespace DSharpDX.Engine
 {
     public class GameObject : Model
     {
-        public float gravY = 0.0001f;
-
         public float Speed { get; set; }
 
         public Vector3 oldPos;
+
         public Collider Collider { get; private set; }
 
         public Vector3 Rotation;

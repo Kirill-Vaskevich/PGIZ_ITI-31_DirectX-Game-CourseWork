@@ -77,7 +77,7 @@ namespace DSharpDX.Graphics
                     return false;
 
                 // Set the position for the cube model.
-                CubeModel.SetPosition(-2.0f, 1.0f, 0.0f);
+                CubeModel.SetPosition(-2.0f, 0.0f, 0.0f);
 
                 // Create the sphere model object.
                 SphereModel = new GameObject(ColliderType.Sphere);
@@ -87,7 +87,7 @@ namespace DSharpDX.Graphics
                     return false;
 
                 // Set the position for the sphere model.
-                SphereModel.SetPosition(2.0f, 1.0f, 0.0f);
+                SphereModel.SetPosition(2.0f, 0.0f, 0.0f);
 
                 // Create the ground model object.
                 GroundModel = new GameObject();
@@ -163,52 +163,6 @@ namespace DSharpDX.Graphics
             return true;
         }
 
-        #region Other
-        public bool Render1(GameObject[] gameObjects)
-        {
-            // First render the scene to a texture.
-            if (!RenderSceneToTexture())
-                return false;
-
-            // Clear the buffers to begin the scene.
-            D3D.BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
-
-            // Generate the view matrix based on the camera's position.
-            Camera.Render();
-
-            // Generate the light view matrix based on the light's position.
-            Light.GenerateViewMatrix();
-
-            // Get the world, view, and projection matrices from the camera and d3d objects.
-            Matrix viewMatrix = Camera.ViewMatrix;
-            Matrix projectionMatrix = D3D.ProjectionMatrix;
-
-            // Get the light's view and projection matrices from the light object.
-            Matrix lightViewMatrix = Light.ViewMatrix;
-            Matrix lightProjectionMatrix = Light.ProjectionMatrix;
-
-            foreach (GameObject obj in gameObjects)
-            {
-                // Reset the world matrix.
-                Matrix worldMatrix = D3D.WorldMatrix;
-                // Setup the translation matrix for the cube model.
-                Vector3 position = obj.GetPosition();
-                Matrix.Translation(position.X, position.Y, position.Z, out worldMatrix);
-
-                // Put the cube model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-                obj.Render(D3D.DeviceContext);
-
-                // Render the model using the shadow shader.
-                if (!ShadowShader.Render(D3D.DeviceContext, CubeModel.IndexCount, worldMatrix, viewMatrix, projectionMatrix, lightViewMatrix, lightProjectionMatrix, obj.Texture.TextureResource, RenderTexture.ShaderResourceView, Light.Position, Light.AmbientColor, Light.DiffuseColour))
-                    return false;
-            }
-
-            // Present the rendered scene to the screen.
-            D3D.EndScene();
-
-            return true;
-        }
-
         public bool Render()
         {
             // First render the scene to a texture.
@@ -226,49 +180,31 @@ namespace DSharpDX.Graphics
 
             // Get the world, view, and projection matrices from the camera and d3d objects.
             Matrix viewMatrix = Camera.ViewMatrix;
-            Matrix worldMatrix = D3D.WorldMatrix;
             Matrix projectionMatrix = D3D.ProjectionMatrix;
 
             // Get the light's view and projection matrices from the light object.
             Matrix lightViewMatrix = Light.ViewMatrix;
             Matrix lightProjectionMatrix = Light.ProjectionMatrix;
+            Matrix worldMatrix;
+            GameObject[] gameObjects = { CubeModel, SphereModel, GroundModel };
 
-            // Setup the translation matrix for the cube model.
-            Vector3 cubePosition = CubeModel.GetPosition();
-            Matrix.Translation(cubePosition.X, cubePosition.Y, cubePosition.Z, out worldMatrix);
+            foreach (GameObject obj in gameObjects)
+            {
+                // Reset the world matrix.
+                worldMatrix = D3D.WorldMatrix;
+                // Setup the translation matrix for the cube model.
+                Vector3 position = obj.GetPosition();
+                Vector3 rotation = obj.GetRotation();
+                Matrix.Translation(position.X, position.Y, position.Z, out worldMatrix);
+                //Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z, out worldMatrix);
 
-            // Put the cube model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-            CubeModel.Render(D3D.DeviceContext);
+                // Put the cube model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+                obj.Render(D3D.DeviceContext);
 
-            // Render the model using the shadow shader.
-            if (!ShadowShader.Render(D3D.DeviceContext, CubeModel.IndexCount, worldMatrix, viewMatrix, projectionMatrix, lightViewMatrix, lightProjectionMatrix, CubeModel.Texture.TextureResource, RenderTexture.ShaderResourceView, Light.Position, Light.AmbientColor, Light.DiffuseColour))
-                return false;
-
-            // Reset the world matrix.
-            worldMatrix = D3D.WorldMatrix;
-
-            // Setup the translation matrix for the sphere model.
-            Vector3 spherePosition = SphereModel.GetPosition();
-            //Vector3 sphereRot = SphereModel.GetRotation();
-            Matrix.Translation(spherePosition.X, spherePosition.Y, spherePosition.Z, out worldMatrix);
-            //Matrix.RotationYawPitchRoll(sphereRot.Y, sphereRot.X, sphereRot.Z, out worldMatrix);
-            // Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-            SphereModel.Render(D3D.DeviceContext);
-            if (!ShadowShader.Render(D3D.DeviceContext, SphereModel.IndexCount, worldMatrix, viewMatrix, projectionMatrix, lightViewMatrix, lightProjectionMatrix, SphereModel.Texture.TextureResource, RenderTexture.ShaderResourceView, Light.Position, Light.AmbientColor, Light.DiffuseColour))
-                return false;
-
-            // Reset the world matrix.
-            worldMatrix = D3D.WorldMatrix;
-
-            // Setup the translation matrix for the ground model.
-            Vector3 groundPosition = GroundModel.GetPosition();
-            Vector3 groundRotation = GroundModel.GetRotation();
-            Matrix.Translation(groundPosition.X, groundPosition.Y, groundPosition.Z, out worldMatrix);
-            Matrix.RotationYawPitchRoll(groundRotation.Y, groundRotation.X, groundRotation.Z, out worldMatrix);
-            // Render the ground model using the shadow shader.
-            GroundModel.Render(D3D.DeviceContext);
-            if (!ShadowShader.Render(D3D.DeviceContext, GroundModel.IndexCount, worldMatrix, viewMatrix, projectionMatrix, lightViewMatrix, lightProjectionMatrix, GroundModel.Texture.TextureResource, RenderTexture.ShaderResourceView, Light.Position, Light.AmbientColor, Light.DiffuseColour))
-                return false;
+                // Render the model using the shadow shader.
+                if (!ShadowShader.Render(D3D.DeviceContext, obj.IndexCount, worldMatrix, viewMatrix, projectionMatrix, lightViewMatrix, lightProjectionMatrix, obj.Texture.TextureResource, RenderTexture.ShaderResourceView, Light.Position, Light.AmbientColor, Light.DiffuseColour))
+                    return false;
+            }
 
             // Present the rendered scene to the screen.
             D3D.EndScene();
@@ -287,49 +223,28 @@ namespace DSharpDX.Graphics
             // Generate the light view matrix based on the light's position.
             Light.GenerateViewMatrix();
 
-            // Get the world matrix from the d3d object.
-            Matrix worldMareix = D3D.WorldMatrix;
-
             // Get the view and orthographic matrices from the light object.
             Matrix lightViewMatrix = Light.ViewMatrix;
             Matrix lightOrthoMatrix = Light.ProjectionMatrix;
+            Matrix worldMatrix;
+            GameObject[] gameObjects = { CubeModel, SphereModel, GroundModel };
 
-            // Setup the translation matrix for the cube model.
-            Vector3 cubePosition = CubeModel.GetPosition();
-            Matrix.Translation(cubePosition.X, cubePosition.Y, cubePosition.Z, out worldMareix);
+            foreach (GameObject obj in gameObjects)
+            {
+                // Get the world matrix from the d3d object.
+                worldMatrix = D3D.WorldMatrix;
 
-            // Render the cube model with the depth shader.
-            CubeModel.Render(D3D.DeviceContext);
-            if (!DepthShader.Render(D3D.DeviceContext, CubeModel.IndexCount, worldMareix, lightViewMatrix, lightOrthoMatrix))
-                return false;
+                // Setup the translation matrix for the model.
+                Vector3 pos = obj.GetPosition();
+                Vector3 rot = obj.GetRotation();
+                Matrix.Translation(pos.X, pos.Y, pos.Z, out worldMatrix);
+                //Matrix.RotationYawPitchRoll(rot.Y, rot.X, rot.Z, out worldMatrix);
 
-            // Reset the world matrix.
-            worldMareix = D3D.WorldMatrix;
-
-            // Setup the translation matrix for the sphere model.
-            Vector3 spherePosition = SphereModel.GetPosition();
-            //Vector3 sphereRot = SphereModel.GetRotation();
-            Matrix.Translation(spherePosition.X, spherePosition.Y, spherePosition.Z, out worldMareix);
-            //Matrix.RotationYawPitchRoll(sphereRot.Y, sphereRot.X, sphereRot.Z, out worldMareix);
-
-            // Render the sphere model with the depth shader.
-            SphereModel.Render(D3D.DeviceContext);
-            if (!DepthShader.Render(D3D.DeviceContext, SphereModel.IndexCount, worldMareix, lightViewMatrix, lightOrthoMatrix))
-                return false;
-
-            // Reset the world matrix.
-            worldMareix = D3D.WorldMatrix;
-
-            // Setup the translation matrix for the ground model.
-            Vector3 groundPosition = GroundModel.GetPosition();
-            Vector3 groundRotation = GroundModel.GetRotation();
-            Matrix.Translation(groundPosition.X, groundPosition.Y, groundPosition.Z, out worldMareix);
-            Matrix.RotationYawPitchRoll(groundRotation.Y, groundRotation.X, groundRotation.Z, out worldMareix);
-
-            // Render the ground model with the depth shader.
-            GroundModel.Render(D3D.DeviceContext);
-            if (!DepthShader.Render(D3D.DeviceContext, GroundModel.IndexCount, worldMareix, lightViewMatrix, lightOrthoMatrix))
-                return false;
+                // Render the cube model with the depth shader.
+                obj.Render(D3D.DeviceContext);
+                if (!DepthShader.Render(D3D.DeviceContext, obj.IndexCount, worldMatrix, lightViewMatrix, lightOrthoMatrix))
+                    return false;
+            }
 
             // Reset the render target back to the original back buffer and not the render to texture anymore.
             D3D.SetBackBufferRenderTarget();
@@ -339,6 +254,8 @@ namespace DSharpDX.Graphics
 
             return true;
         }
+
+        #region Other
 
         public void Shutdown()
         {

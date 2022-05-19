@@ -130,6 +130,7 @@ namespace DSharpDX.System
             CameraPos.FrameTime = frameTime;
 
             // Handle the input
+            #region Ground rotation & sphere moving
             bool keydown = Input.IsSPressed();
             CameraPos.LookUp(keydown);
             if (CameraPos.GetRotation().X > 1)
@@ -151,6 +152,10 @@ namespace DSharpDX.System
             CameraPos.TurnLeft(keydown);
             if (CameraPos.GetRotation().Z < -1)
                 SpherePosition.MoveLeft(true);
+            #endregion
+
+            //keydown = Input.IsLeftArrowPressed();
+            //CameraPos.MoveLeft(keydown);
 
             keydown = Input.IsDownArrowPressed();
             SpherePosition.LookDown(keydown);
