@@ -1,6 +1,6 @@
 ﻿using DSharpDX.Engine;
 using DSharpDX.Engine.Colliders;
-using DSharpDX.Graphics.Camera;
+using DSharpDX.Graphics.Models;
 using DSharpDX.Graphics.Data;
 using DSharpDX.Graphics.Shaders;
 using DSharpDX.System;
@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace DSharpDX.Graphics
 {
-    public class DGraphics                  // 309 lines
+    public class Graphics                  // 309 lines
     {
         // Properties
-        private DDX11 D3D { get; set; }
-        public DCamera Camera { get; set; }
+        private DX11 D3D { get; set; }
+        public Camera Camera { get; set; }
 
         #region Data
-        private DLight Light { get; set; }
-        private DRenderTexture RenderTexture { get; set; }
+        private Light Light { get; set; }
+        private RenderTexture RenderTexture { get; set; }
         #endregion
 
         #region Models
@@ -30,30 +30,30 @@ namespace DSharpDX.Graphics
         #endregion
 
         #region Shaders
-        public DDepthShader DepthShader { get; set; }
-        public DShadowShader ShadowShader { get; set; }
+        public DepthShader DepthShader { get; set; }
+        public ShadowShader ShadowShader { get; set; }
         #endregion     
 
         #region Variables
         private Vector3 _lightPosition = new Vector3(0, 8, -5);
         #endregion
 
-        public DGraphics() { }
+        public Graphics() { }
 
         // Construtor
-        public DGraphics(List<GameObject> objects)
+        public Graphics(List<GameObject> objects)
         {
             _objects = objects;
         }
 
         // Methods.
-        public bool Initialize(DSystemConfiguration configuration, IntPtr windowHandle)
+        public bool Initialize(SystemConfiguration configuration, IntPtr windowHandle)
         {
             try
             {
                 #region Initialize System
                 // Create the Direct3D object.
-                D3D = new DDX11();
+                D3D = new DX11();
                 
                 // Initialize the Direct3D object.
                 if (!D3D.Initialize(configuration, windowHandle))
@@ -62,7 +62,7 @@ namespace DSharpDX.Graphics
 
                 #region Initialize Camera
                 // Create the camera object
-                Camera = new DCamera();
+                Camera = new Camera();
 
                 // Set the initial position of the camera.
                 Camera.SetPosition(0.0f, 10.0f, -10.0f);
@@ -98,11 +98,12 @@ namespace DSharpDX.Graphics
 
                 // Set the position for the ground model.
                 GroundModel.SetPosition(0.0f, -1.0f, 1.0f);
+                GroundModel.SetRotation(0, 0, 0);
                 #endregion
 
                 #region Data variables.
                 // Create the light object.
-                Light = new DLight();
+                Light = new Light();
 
                 // Initialize the light object.
                 Light.SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
@@ -111,14 +112,14 @@ namespace DSharpDX.Graphics
                 Light.GenerateProjectionMatrix();
 
                 // Create the render to texture object.
-                RenderTexture = new DRenderTexture();
+                RenderTexture = new RenderTexture();
 
                 // Initialize the render to texture object.
                 if (!RenderTexture.Initialize(D3D.Device, configuration))
                     return false;
 
                 // Create the depth shader object.
-                DepthShader = new DDepthShader();
+                DepthShader = new DepthShader();
 
                 // Initialize the depth shader object.
                 if (!DepthShader.Initialize(D3D.Device, windowHandle))
@@ -127,7 +128,7 @@ namespace DSharpDX.Graphics
 
                 #region Initialize Shaders
                 // Create the shadow shader object.
-                ShadowShader = new DShadowShader();
+                ShadowShader = new ShadowShader();
 
                 // Initialize the shadow shader object.
                 if (!ShadowShader.Initialize(D3D.Device, windowHandle))
@@ -142,15 +143,14 @@ namespace DSharpDX.Graphics
                 return false;
             }
         }
-        public bool Frame(Vector3 spherePos, Vector3 sphereRot,
-            Vector3 groundRot)
+        public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot)
         {
 
             // Set the position of the camera.
-            Camera.SetRotation(sphereRot);
+            Camera.SetRotation(cameraRot);
+            sphereRot /= 10f;
 
-            SphereModel.SetPosition(spherePos);
-            GroundModel.SetRotation(groundRot);
+            //SphereModel.SetPosition(cameraRot.Z, 1, -cameraRot.X);
 
             if (SphereModel.Collider.IsCollided(CubeModel))
             {

@@ -4,7 +4,7 @@ using SharpDX;
 
 namespace DSharpDX.Engine
 {
-    public class GameObject : DModel
+    public class GameObject : Model
     {
         public float gravY = 0.0001f;
 

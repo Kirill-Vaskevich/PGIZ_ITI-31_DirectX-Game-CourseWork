@@ -7,24 +7,24 @@ using System.Windows.Forms;
 
 namespace DSharpDX.System
 {
-    public class DSystem                    // 172 lines
+    public class System                    // 172 lines
     {
         // Properties
         private RenderForm RenderForm { get; set; }
-        public DSystemConfiguration Configuration { get; private set; }
-        public DInput Input { get; private set; }
-        public DGraphics Graphics { get; private set; }
-        public DTimer Timer { get; private set; }
-        public DPosition SpherePosition { get; private set; }
-        public DPosition GroundPosition { get; private set; }
-        public DPosition CameraPos { get; private set; }
+        public SystemConfiguration Configuration { get; private set; }
+        public Input Input { get; private set; }
+        public Graphics.Graphics Graphics { get; private set; }
+        public Timer Timer { get; private set; }
+        public Transform SpherePosition { get; private set; }
+        public Transform GroundPosition { get; private set; }
+        public Transform CameraPos { get; private set; }
 
         // Constructor
-        public DSystem() { }
+        public System() { }
 
         public static void StartRenderForm(string title, int width, int height, bool vSync, bool fullScreen = true, int testTimeSeconds = 0)
         {
-            DSystem system = new DSystem();
+            System system = new System();
             system.Initialize(title, width, height, vSync, fullScreen, testTimeSeconds);
             system.RunRenderForm();
         }
@@ -35,25 +35,25 @@ namespace DSharpDX.System
             bool result = false;
 
             if (Configuration == null)
-                Configuration = new DSystemConfiguration(title, width, height, fullScreen, vSync);
+                Configuration = new SystemConfiguration(title, width, height, fullScreen, vSync);
 
             // Initialize Window.
             InitializeWindows(title);
 
             if (Input == null)
             {
-                Input = new DInput();
+                Input = new Input();
                 if (!Input.Initialize(Configuration, RenderForm.Handle))
                     return false;
             }
             if (Graphics == null)
             {
-                Graphics = new DGraphics();
+                Graphics = new Graphics.Graphics();
                 result = Graphics.Initialize(Configuration, RenderForm.Handle);
             }
             
             // Create and initialize Timer.
-            Timer = new DTimer();
+            Timer = new Timer();
             if (!Timer.Initialize())
             {
                 Console.WriteLine("Could not initialize Timer object");
@@ -61,9 +61,9 @@ namespace DSharpDX.System
             }
 
             // Create the position object.
-            SpherePosition = new DPosition();
-            GroundPosition = new DPosition();
-            CameraPos = new DPosition();
+            SpherePosition = new Transform();
+            GroundPosition = new Transform();
+            CameraPos = new Transform();
             // Set the initial position of the viewer to the same as the initial camera position.
             SpherePosition.SetPosition(Graphics.SphereModel.GetPosition());
             GroundPosition.SetPosition(Graphics.GroundModel.GetPosition());
@@ -81,7 +81,7 @@ namespace DSharpDX.System
             RenderForm = new RenderForm(title)
             {
                 ClientSize = new Size(Configuration.Width, Configuration.Height),
-                FormBorderStyle = DSystemConfiguration.BorderStyle
+                FormBorderStyle = SystemConfiguration.BorderStyle
             };
 
             // The form must be showing in order for the handle to be used in Input and Graphics objects.
@@ -107,8 +107,9 @@ namespace DSharpDX.System
             Timer.Frame2();
 
             SpherePosition.SetPosition(Graphics.SphereModel.GetPosition());
-            GroundPosition.SetPosition(Graphics.GroundModel.GetPosition());
-            CameraPos.SetPosition(Graphics.Camera.GetPosition());
+            //GroundPosition.SetPosition(Graphics.GroundModel.GetPosition());
+            //CameraPos.SetPosition(Graphics.Camera.GetPosition());
+            CameraPos.SetRotation(Graphics.Camera.GetRotation());
 
             // Do the frame input processing.
             if (!HandleInput(Timer.FrameTime))
@@ -116,7 +117,7 @@ namespace DSharpDX.System
             // Get the view point position/rotation.
             // Do the frame processing for the graphics object.
 
-            if (!Graphics.Frame(SpherePosition.GetPosition(), CameraPos.GetRotation(), GroundPosition.GetRotation()))
+            if (!Graphics.Frame(SpherePosition.GetPosition(), SharpDX.Vector3.Zero, CameraPos.GetRotation()))
                 return false;
 
             return true;

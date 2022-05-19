@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace DSharpDX.Graphics.Shaders
 {
-    public class DShadowShader                  // 343 lines
+    public class ShadowShader                  // 343 lines
     {
         // Structs
         [StructLayout(LayoutKind.Sequential)]
@@ -44,7 +44,7 @@ namespace DSharpDX.Graphics.Shaders
         public SamplerState SamplerStateClamp { get; set; }
 
         // Constructor
-        public DShadowShader() { }
+        public ShadowShader() { }
 
         // Methods
         public bool Initialize(Device device, IntPtr windowsHandler)
@@ -57,12 +57,12 @@ namespace DSharpDX.Graphics.Shaders
             try
             {
                 // Setup full pathes
-                vsFileName = DSystemConfiguration.ShaderFilePath + vsFileName;
-                psFileName = DSystemConfiguration.ShaderFilePath + psFileName;
+                vsFileName = SystemConfiguration.ShaderFilePath + vsFileName;
+                psFileName = SystemConfiguration.ShaderFilePath + psFileName;
 
                 // Compile the Vertex Shader & Pixel Shader code.
-                ShaderBytecode vertexShaderByteCode = ShaderBytecode.CompileFromFile(vsFileName, "ShadowVertexShader", DSystemConfiguration.VertexShaderProfile, ShaderFlags.None, EffectFlags.None);
-                ShaderBytecode pixelShaderByteCode = ShaderBytecode.CompileFromFile(psFileName, "ShadowPixelShader", DSystemConfiguration.PixelShaderProfile, ShaderFlags.None, EffectFlags.None);
+                ShaderBytecode vertexShaderByteCode = ShaderBytecode.CompileFromFile(vsFileName, "ShadowVertexShader", SystemConfiguration.VertexShaderProfile, ShaderFlags.None, EffectFlags.None);
+                ShaderBytecode pixelShaderByteCode = ShaderBytecode.CompileFromFile(psFileName, "ShadowPixelShader", SystemConfiguration.PixelShaderProfile, ShaderFlags.None, EffectFlags.None);
 
                 // Create the Vertex & Pixel Shaders from the buffer.
                 VertexShader = new VertexShader(device, vertexShaderByteCode);

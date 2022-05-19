@@ -6,7 +6,7 @@ using SharpDX.DXGI;
 
 namespace DSharpDX.Graphics.Data
 {
-    public class DRenderTexture                 // 146 lines
+    public class RenderTexture                 // 146 lines
     {
         // Properties
         private Texture2D RenderTargetTexture { get; set; }
@@ -17,7 +17,7 @@ namespace DSharpDX.Graphics.Data
         public ViewportF ViewPort { get; set; }
       
         // Puvlix Methods
-        public bool Initialize(SharpDX.Direct3D11.Device device, DSystemConfiguration configuration)
+        public bool Initialize(SharpDX.Direct3D11.Device device, SystemConfiguration configuration)
         {
             try
             {

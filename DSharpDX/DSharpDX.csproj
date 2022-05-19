@@ -72,21 +72,22 @@
     <Compile Include="Engine\Colliders\CubeCollider.cs" />
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Engine\Colliders\SphereCollider.cs" />
-    <Compile Include="Graphics\Camera\DCamera.cs" />
-    <Compile Include="Graphics\Data\DLight.cs" />
-    <Compile Include="Graphics\Data\DRenderTexture.cs" />
-    <Compile Include="Graphics\Data\DTexture.cs" />
-    <Compile Include="Graphics\DDX11.cs" />
-    <Compile Include="Graphics\DGraphics.cs" />
-    <Compile Include="Graphics\Input\DInput.cs" />
-    <Compile Include="Graphics\Input\DPosition.cs" />
-    <Compile Include="Graphics\Models\DModel.cs" />
-    <Compile Include="Graphics\Shaders\DDepthShader.cs" />
-    <Compile Include="Graphics\Shaders\DShadowShader.cs" />
+    <Compile Include="Engine\Sphere.cs" />
+    <Compile Include="Graphics\Models\Camera.cs" />
+    <Compile Include="Graphics\Data\Light.cs" />
+    <Compile Include="Graphics\Data\RenderTexture.cs" />
+    <Compile Include="Graphics\Data\Texture.cs" />
+    <Compile Include="Graphics\DX11.cs" />
+    <Compile Include="Graphics\Graphics.cs" />
+    <Compile Include="Graphics\Input\Input.cs" />
+    <Compile Include="Graphics\Input\Transform.cs" />
+    <Compile Include="Graphics\Models\Model.cs" />
+    <Compile Include="Graphics\Shaders\DepthShader.cs" />
+    <Compile Include="Graphics\Shaders\ShadowShader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\DSystem.cs" />
-    <Compile Include="System\DSystemConfiguration.cs" />
-    <Compile Include="System\DTimer.cs" />
+    <Compile Include="System\System.cs" />
+    <Compile Include="System\SystemConfiguration.cs" />
+    <Compile Include="System\Timer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Externals\Shaders\depth.ps" />

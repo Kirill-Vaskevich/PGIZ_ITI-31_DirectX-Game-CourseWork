@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace DSharpDX.Graphics.Shaders
 {
-    public class DDepthShader                   // 182 lines
+    public class DepthShader                   // 182 lines
     {
         // Structures.
         [StructLayout(LayoutKind.Sequential)]
@@ -26,7 +26,7 @@ namespace DSharpDX.Graphics.Shaders
         public SharpDX.Direct3D11.Buffer ConstantMatrixBuffer { get; set; }
 
         // Constructor
-        public DDepthShader() { }
+        public DepthShader() { }
 
         // Methods.
         public bool Initialize(Device device, IntPtr windowsHandle)
@@ -39,13 +39,13 @@ namespace DSharpDX.Graphics.Shaders
             try
             {
                 // Setup full pathes
-                vsFileName = DSystemConfiguration.ShaderFilePath + vsFileName;
-                psFileName = DSystemConfiguration.ShaderFilePath + psFileName;
+                vsFileName = SystemConfiguration.ShaderFilePath + vsFileName;
+                psFileName = SystemConfiguration.ShaderFilePath + psFileName;
 
                 // Compile the vertex shader code.
-                ShaderBytecode vertexShaderByteCode = ShaderBytecode.CompileFromFile(vsFileName, "DepthVertexShader", DSystemConfiguration.VertexShaderProfile, ShaderFlags.None, EffectFlags.None);
+                ShaderBytecode vertexShaderByteCode = ShaderBytecode.CompileFromFile(vsFileName, "DepthVertexShader", SystemConfiguration.VertexShaderProfile, ShaderFlags.None, EffectFlags.None);
                 // Compile the pixel shader code.
-                ShaderBytecode pixelShaderByteCode = ShaderBytecode.CompileFromFile(psFileName, "DepthPixelShader", DSystemConfiguration.PixelShaderProfile, ShaderFlags.None, EffectFlags.None);
+                ShaderBytecode pixelShaderByteCode = ShaderBytecode.CompileFromFile(psFileName, "DepthPixelShader", SystemConfiguration.PixelShaderProfile, ShaderFlags.None, EffectFlags.None);
                 
                 // Create the vertex shader from the buffer.
                 VertexShader = new VertexShader(device, vertexShaderByteCode);

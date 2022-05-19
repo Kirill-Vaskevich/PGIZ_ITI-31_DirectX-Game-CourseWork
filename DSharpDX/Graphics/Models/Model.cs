@@ -13,7 +13,7 @@ using System.Globalization;
 
 namespace DSharpDX.Graphics.Models
 {
-    public class DModel                 // 202 lines
+    public class Model                 // 202 lines
     {
         // Structures
         [StructLayout(LayoutKind.Sequential)]
@@ -36,13 +36,13 @@ namespace DSharpDX.Graphics.Models
         private SharpDX.Direct3D11.Buffer IndexBuffer { get; set; }
         private int VertexCount { get; set; }
         public int IndexCount { get; private set; }
-        public DTexture Texture { get; set; }
+        public Texture Texture { get; set; }
         public DModelFormat[] ModelObject { get; private set; }
 
         protected Vector3 Position;
 
         // Constructor 
-        public DModel() { }
+        public Model() { }
 
         // Methods
         public bool Initialize(SharpDX.Direct3D11.Device device, string modelFormatFilename, string textureFileNames)
@@ -63,7 +63,7 @@ namespace DSharpDX.Graphics.Models
         }
         protected bool LoadModel(string modelFormatFilename)
         {
-            modelFormatFilename = DSystemConfiguration.ModelFilePath + modelFormatFilename;
+            modelFormatFilename = SystemConfiguration.ModelFilePath + modelFormatFilename;
             List<string> lines = null;
 
             try
@@ -101,10 +101,10 @@ namespace DSharpDX.Graphics.Models
         }
         protected bool LoadTextures(SharpDX.Direct3D11.Device device, string textureFileNames)
         {
-            textureFileNames = DSystemConfiguration.DataFilePath + textureFileNames;
+            textureFileNames = SystemConfiguration.DataFilePath + textureFileNames;
 
             // Create the texture object.
-            Texture = new DTexture();
+            Texture = new Texture();
 
             // Initialize the texture object.
             Texture.Initialize(device, textureFileNames);

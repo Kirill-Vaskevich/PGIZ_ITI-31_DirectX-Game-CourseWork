@@ -5,7 +5,7 @@ using System;
 
 namespace DSharpDX.Graphics.Input
 {
-    public class DInput                 // 232 lines
+    public class Input                 // 232 lines
     {
         // Variables.
         public KeyboardState _KeyboardState;
@@ -21,7 +21,7 @@ namespace DSharpDX.Graphics.Input
         public int _MouseY { get; set; }
 
         // Methods.
-        internal bool Initialize(DSystemConfiguration configuration, IntPtr windowsHandle)
+        internal bool Initialize(SystemConfiguration configuration, IntPtr windowsHandle)
         {
             // Screen the screen size which will be used for positioning the mouse cursor.
             _ScreenWidth = configuration.Width;

@@ -4,7 +4,7 @@ using System;
 
 namespace DSharpDX.Graphics.Data
 {
-    public class DLight                 // 48 lines
+    public class Light                 // 48 lines
     {
         // Properties
         public Vector4 AmbientColor { get; private set; }
@@ -38,7 +38,7 @@ namespace DSharpDX.Graphics.Data
             float screenAspect = 1.0f;
 
             // Create the projection matrix for the light.
-            ProjectionMatrix = Matrix.PerspectiveFovLH(fieldOfView, screenAspect, DSystemConfiguration.ScreenNear, DSystemConfiguration.ScreenDepth);
+            ProjectionMatrix = Matrix.PerspectiveFovLH(fieldOfView, screenAspect, SystemConfiguration.ScreenNear, SystemConfiguration.ScreenDepth);
         }
         public void SetLookAt(float x, float y, float z)
         {

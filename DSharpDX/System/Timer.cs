@@ -2,7 +2,7 @@
 
 namespace DSharpDX.System
 {
-    public class DTimer                 // 48 lines
+    public class Timer                 // 48 lines
     {
         // Variables
         private Stopwatch _StopWatch;

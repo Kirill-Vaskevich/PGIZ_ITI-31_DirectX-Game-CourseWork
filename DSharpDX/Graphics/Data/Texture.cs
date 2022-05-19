@@ -3,7 +3,7 @@ using SharpDX.WIC;
 
 namespace DSharpDX.Graphics.Data
 {
-    public class DTexture                   // 31 lines
+    public class Texture                   // 31 lines
     {
         // Propertues
         public ShaderResourceView TextureResource { get; private set; }

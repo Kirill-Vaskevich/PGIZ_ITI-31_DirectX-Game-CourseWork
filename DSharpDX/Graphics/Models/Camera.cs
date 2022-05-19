@@ -1,8 +1,8 @@
 ﻿using SharpDX;
 
-namespace DSharpDX.Graphics.Camera
+namespace DSharpDX.Graphics.Models
 {
-    public class DCamera                    // 63 lines
+    public class Camera                    // 63 lines
     {
         // Properties.
         private float X { get; set; }
@@ -14,7 +14,7 @@ namespace DSharpDX.Graphics.Camera
         public Matrix ViewMatrix { get; private set; }
 
         // Constructor
-        public DCamera() { }
+        public Camera() { }
 
         // Methods.
         public void SetPosition(float x, float y, float z)
@@ -28,6 +28,11 @@ namespace DSharpDX.Graphics.Camera
             Pitch = x;
             Yaw = y;
             Roll = z;
+        }
+
+        public Vector3 GetRotation()
+        {
+            return new Vector3(Pitch, Yaw, Roll);
         }
 
         public void SetRotation(Vector3 rot)

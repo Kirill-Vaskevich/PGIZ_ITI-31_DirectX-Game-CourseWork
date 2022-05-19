@@ -2,7 +2,7 @@
 
 namespace DSharpDX.System
 {
-    public class DSystemConfiguration                   // 58 lines
+    public class SystemConfiguration                   // 58 lines
     {
         // Properties
         public string Title { get; set; }
@@ -22,9 +22,9 @@ namespace DSharpDX.System
         public static string ModelFilePath { get; set; }
 
         // Constructors
-        public DSystemConfiguration(bool fullScreen, bool vSync) : this("SharpDX Demo", fullScreen, vSync) { }
-        public DSystemConfiguration(string title, bool fullScreen, bool vSync) : this(title, 800, 600, fullScreen, vSync) { }
-        public DSystemConfiguration(string title, int width, int height, bool fullScreen, bool vSync)
+        public SystemConfiguration(bool fullScreen, bool vSync) : this("SharpDX Demo", fullScreen, vSync) { }
+        public SystemConfiguration(string title, bool fullScreen, bool vSync) : this(title, 800, 600, fullScreen, vSync) { }
+        public SystemConfiguration(string title, int width, int height, bool fullScreen, bool vSync)
         {
             FullScreen = fullScreen;
             Title = title;
@@ -43,7 +43,7 @@ namespace DSharpDX.System
         }
 
         // Static Constructor
-        static DSystemConfiguration()
+        static SystemConfiguration()
         {
             FullScreen = false;
             VerticalSyncEnabled = false;

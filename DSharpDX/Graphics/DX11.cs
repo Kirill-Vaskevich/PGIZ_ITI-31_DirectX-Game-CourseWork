@@ -7,7 +7,7 @@ using System;
 
 namespace DSharpDX.Graphics
 {
-    public class DDX11                  // 276 lines
+    public class DX11                  // 276 lines
     {
         // Properties.
         private bool VerticalSyncEnabled { get; set; }
@@ -25,15 +25,15 @@ namespace DSharpDX.Graphics
         public ViewportF ViewPort { get; set; }
 
         // Constructor
-        public DDX11() { }
+        public DX11() { }
 
-        public bool Initialize(DSystemConfiguration configuration, IntPtr windowHandle)
+        public bool Initialize(SystemConfiguration configuration, IntPtr windowHandle)
         {
             try
             {
                 #region Environment Configuration
                 // Store the vsync setting.
-                VerticalSyncEnabled = DSystemConfiguration.VerticalSyncEnabled;
+                VerticalSyncEnabled = SystemConfiguration.VerticalSyncEnabled;
 
                 // Create a DirectX graphics interface factory.
                 var factory = new Factory1();
@@ -95,7 +95,7 @@ namespace DSharpDX.Graphics
                     // Turn multisampling off.
                     SampleDescription = new SampleDescription(1, 0),
                     // Set to full screen or windowed mode.
-                    IsWindowed = !DSystemConfiguration.FullScreen,
+                    IsWindowed = !SystemConfiguration.FullScreen,
                     // Don't set the advanced flags.
                     Flags = SwapChainFlags.None,
                     // Discard the back buffer content after presenting.
@@ -202,7 +202,7 @@ namespace DSharpDX.Graphics
 
                 #region Initialize matrices
                 // Setup and create the projection matrix.
-                ProjectionMatrix = Matrix.PerspectiveFovLH((float)(Math.PI / 4), ((float)configuration.Width / (float)configuration.Height), DSystemConfiguration.ScreenNear, DSystemConfiguration.ScreenDepth);
+                ProjectionMatrix = Matrix.PerspectiveFovLH((float)(Math.PI / 4), ((float)configuration.Width / (float)configuration.Height), SystemConfiguration.ScreenNear, SystemConfiguration.ScreenDepth);
 
                 // Initialize the world matrix to the identity matrix.
                 WorldMatrix = Matrix.Identity;
