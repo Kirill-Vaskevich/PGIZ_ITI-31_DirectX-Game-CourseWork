@@ -223,19 +223,6 @@ namespace DSharpDX.Graphics.Input
         {
             return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.Down);
         }
-        public bool IsPageUpPressed()
-        {
-            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.PageUp);
-        }
-        public bool IsPageDownPressed()
-        {
-            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.PageDown);
-        }
-
-        public bool IsSpacePressed()
-        {
-            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.Space);
-        }
 
         public bool IsWPressed()
         {

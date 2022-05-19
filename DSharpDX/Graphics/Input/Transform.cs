@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using System;
 
 namespace DSharpDX.Graphics.Input
 {
@@ -7,11 +8,13 @@ namespace DSharpDX.Graphics.Input
         // Variables
         public float Speed { get; private set; }
 
-        public float SphereXSpeed { get; private set; }
+        public float SphereXSpeed { get; set; }
 
-        public float SphereZSpeed { get; private set; }
+        public float SphereZSpeed { get; set; }
 
-        public float CameraRotSpeed { get; private set; }
+        public float CameraRotSpeed { get; set; }
+
+        public float SphereRotSpeed { get; set; }
 
         // Properties
         public float X { get; set; }
@@ -28,6 +31,7 @@ namespace DSharpDX.Graphics.Input
             SphereXSpeed = 0f;
             SphereZSpeed = 0f;
             CameraRotSpeed = 0.1f;
+            SphereRotSpeed = 0f;
         }
 
         #region Public Methods Position & Rotation
@@ -55,6 +59,9 @@ namespace DSharpDX.Graphics.Input
 
         public void SetRotation(float pitch, float yaw, float roll)
         {
+            //if (Pitch != pitch || Roll != roll)
+            //    Console.WriteLine(GetRotation());
+
             Pitch = pitch;
             Yaw = yaw;
             Roll = roll;

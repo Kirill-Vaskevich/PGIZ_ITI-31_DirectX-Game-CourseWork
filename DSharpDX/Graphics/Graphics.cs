@@ -35,7 +35,7 @@ namespace DSharpDX.Graphics
         #endregion     
 
         #region Variables
-        private Vector3 _lightPosition = new Vector3(0, 8, -5);
+        private Vector3 _lightPosition = new Vector3(0, 20, -5);
         #endregion
 
         public Graphics() { }
@@ -93,12 +93,11 @@ namespace DSharpDX.Graphics
                 GroundModel = new GameObject();
 
                 // Initialize the ground model object.
-                if (!GroundModel.Initialize(D3D.Device, "plane01.txt", "metal001.bmp"))
+                if (!GroundModel.Initialize(D3D.Device, "ground.txt", "metal001.bmp"))
                     return false;
 
                 // Set the position for the ground model.
                 GroundModel.SetPosition(0.0f, -1.0f, 1.0f);
-                GroundModel.SetRotation(0, 0, 0);
                 #endregion
 
                 #region Data variables.
@@ -146,16 +145,14 @@ namespace DSharpDX.Graphics
         public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot)
         {
 
-            // Set the position of the camera.
+            // Set the rotation of the camera.
             Camera.SetRotation(cameraRot);
-            sphereRot /= 10f;
 
-            //SphereModel.SetPosition(cameraRot.Z, 1, -cameraRot.X);
+            SphereModel.SetPosition(spherePos);
+            //SphereModel.SetRotation(sphereRot);
 
             if (SphereModel.Collider.IsCollided(CubeModel))
-            {
                 SphereModel.Stop();
-            }
 
             // Update the position of the light.
             Light.Position = _lightPosition;
@@ -252,8 +249,9 @@ namespace DSharpDX.Graphics
 
             // Setup the translation matrix for the sphere model.
             Vector3 spherePosition = SphereModel.GetPosition();
+            //Vector3 sphereRot = SphereModel.GetRotation();
             Matrix.Translation(spherePosition.X, spherePosition.Y, spherePosition.Z, out worldMatrix);
-            
+            //Matrix.RotationYawPitchRoll(sphereRot.Y, sphereRot.X, sphereRot.Z, out worldMatrix);
             // Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
             SphereModel.Render(D3D.DeviceContext);
             if (!ShadowShader.Render(D3D.DeviceContext, SphereModel.IndexCount, worldMatrix, viewMatrix, projectionMatrix, lightViewMatrix, lightProjectionMatrix, SphereModel.Texture.TextureResource, RenderTexture.ShaderResourceView, Light.Position, Light.AmbientColor, Light.DiffuseColour))
@@ -310,7 +308,9 @@ namespace DSharpDX.Graphics
 
             // Setup the translation matrix for the sphere model.
             Vector3 spherePosition = SphereModel.GetPosition();
+            //Vector3 sphereRot = SphereModel.GetRotation();
             Matrix.Translation(spherePosition.X, spherePosition.Y, spherePosition.Z, out worldMareix);
+            //Matrix.RotationYawPitchRoll(sphereRot.Y, sphereRot.X, sphereRot.Z, out worldMareix);
 
             // Render the sphere model with the depth shader.
             SphereModel.Render(D3D.DeviceContext);
