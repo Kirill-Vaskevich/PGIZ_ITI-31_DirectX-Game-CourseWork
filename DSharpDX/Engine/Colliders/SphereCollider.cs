@@ -25,6 +25,7 @@ namespace DSharpDX.Engine.Colliders
 
                 if (r2 <= Math.Pow(_radius, 2))
                 {
+                    Console.WriteLine(Position);
                     Collide = true;
                     return true;
                 }

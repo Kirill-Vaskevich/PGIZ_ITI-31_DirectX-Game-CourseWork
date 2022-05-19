@@ -22,11 +22,11 @@ namespace DSharpDX.Graphics
         #endregion
 
         #region Models
-        private GameObject CubeModel { get; set; }
+        //private GameObject CubeModel { get; set; }
         public GameObject GroundModel { get; set; }
         public GameObject SphereModel { get; set; }
 
-        private List<GameObject> _objects;
+        private List<GameObject> _gameObjects;
         #endregion
 
         #region Shaders
@@ -41,10 +41,6 @@ namespace DSharpDX.Graphics
         public Graphics() { }
 
         // Construtor
-        public Graphics(List<GameObject> objects)
-        {
-            _objects = objects;
-        }
 
         // Methods.
         public bool Initialize(SystemConfiguration configuration, IntPtr windowHandle)
@@ -54,7 +50,7 @@ namespace DSharpDX.Graphics
                 #region Initialize System
                 // Create the Direct3D object.
                 D3D = new DX11();
-                
+
                 // Initialize the Direct3D object.
                 if (!D3D.Initialize(configuration, windowHandle))
                     return false;
@@ -70,14 +66,18 @@ namespace DSharpDX.Graphics
 
                 #region Initialize Models
                 // Create the cube model object.
-                CubeModel = new GameObject(ColliderType.Cube);
 
-                // Initialize the cube model object.
-                if (!CubeModel.Initialize(D3D.Device, "cube.txt", "wall01sm.bmp"))
-                    return false;
+                //_gameObjects = new List<GameObject>();
+                _gameObjects = InitLabirint();
 
-                // Set the position for the cube model.
-                CubeModel.SetPosition(-2.0f, 0.0f, 0.0f);
+                //CubeModel = new GameObject(ColliderType.Cube);
+
+                //// Initialize the cube model object.
+                //if (!CubeModel.Initialize(D3D.Device, "cube.txt", "wall01sm.bmp"))
+                //    return false;
+
+                //// Set the position for the cube model.
+                //CubeModel.SetPosition(-2.0f, 0.0f, 0.0f);
 
                 // Create the sphere model object.
                 SphereModel = new GameObject(ColliderType.Sphere);
@@ -98,6 +98,10 @@ namespace DSharpDX.Graphics
 
                 // Set the position for the ground model.
                 GroundModel.SetPosition(0.0f, -1.0f, 1.0f);
+
+                //_gameObjects.Add(CubeModel);
+                _gameObjects.Add(SphereModel);
+                _gameObjects.Add(GroundModel);
                 #endregion
 
                 #region Data variables.
@@ -133,7 +137,7 @@ namespace DSharpDX.Graphics
                 if (!ShadowShader.Initialize(D3D.Device, windowHandle))
                     return false;
                 #endregion
-  
+
                 return true;
             }
             catch (Exception ex)
@@ -142,17 +146,47 @@ namespace DSharpDX.Graphics
                 return false;
             }
         }
+
+        public List<GameObject> InitLabirint()
+        {
+            GameObject[,] matrix = new GameObject[6, 5];
+            List<GameObject> objects = new List<GameObject>();
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    Random random = new Random();
+                    int digit = random.Next(0, 5);
+                    if (digit == 2)
+                        continue;
+                    matrix[i, j] = new GameObject(ColliderType.Cube);
+                    matrix[i, j].Initialize(D3D.Device, "cube.txt", "wall01sm.bmp");
+                    matrix[i, j].SetPosition(i * 2 - 5, 0, j * 2 - 4);
+                    objects.Add(matrix[i, j]);
+                    //Console.WriteLine(matrix[i, j].GetPosition());
+                    //Console.WriteLine("collider " + matrix[i, j].Collider.Position);
+                }
+            }
+
+            return objects;
+        }
+
         public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot)
         {
-
             // Set the rotation of the camera.
             Camera.SetRotation(cameraRot);
 
             SphereModel.SetPosition(spherePos);
-            //SphereModel.SetRotation(sphereRot);
 
-            if (SphereModel.Collider.IsCollided(CubeModel))
-                SphereModel.Stop();
+            foreach (GameObject obj in _gameObjects)
+            {
+                if (obj.Collider is CubeCollider && SphereModel.Collider.IsCollided(obj))
+                {
+                    SphereModel.Stop();
+                    break;
+                }
+            }
 
             // Update the position of the light.
             Light.Position = _lightPosition;
@@ -186,9 +220,9 @@ namespace DSharpDX.Graphics
             Matrix lightViewMatrix = Light.ViewMatrix;
             Matrix lightProjectionMatrix = Light.ProjectionMatrix;
             Matrix worldMatrix;
-            GameObject[] gameObjects = { CubeModel, SphereModel, GroundModel };
+            //GameObject[] gameObjects = { CubeModel, SphereModel, GroundModel };
 
-            foreach (GameObject obj in gameObjects)
+            foreach (GameObject obj in _gameObjects)
             {
                 // Reset the world matrix.
                 worldMatrix = D3D.WorldMatrix;
@@ -227,9 +261,9 @@ namespace DSharpDX.Graphics
             Matrix lightViewMatrix = Light.ViewMatrix;
             Matrix lightOrthoMatrix = Light.ProjectionMatrix;
             Matrix worldMatrix;
-            GameObject[] gameObjects = { CubeModel, SphereModel, GroundModel };
+            //GameObject[] gameObjects = { CubeModel, SphereModel, GroundModel };
 
-            foreach (GameObject obj in gameObjects)
+            foreach (GameObject obj in _gameObjects)
             {
                 // Get the world matrix from the d3d object.
                 worldMatrix = D3D.WorldMatrix;
@@ -280,8 +314,8 @@ namespace DSharpDX.Graphics
             SphereModel?.Shutdown();
             SphereModel = null;
             // Release the cube model object.
-            CubeModel?.Shutdown();
-            CubeModel = null;
+            //CubeModel?.Shutdown();
+            //CubeModel = null;
             // Release the Direct3D object.
             D3D?.ShutDown();
             D3D = null;

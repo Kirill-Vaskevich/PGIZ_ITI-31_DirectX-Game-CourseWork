@@ -114,12 +114,10 @@ namespace DSharpDX.System
                 return false;
 
             SpherePosition.SetPosition(Graphics.SphereModel.GetPosition());
-            SpherePosition.SetRotation(Graphics.SphereModel.GetRotation());
+            //SpherePosition.SetRotation(Graphics.SphereModel.GetRotation());
             CameraPos.SetRotation(Graphics.Camera.GetRotation());
             SpherePosition.SphereXSpeed = 0.001f * Math.Abs(CameraPos.GetRotation().Z);
             SpherePosition.SphereZSpeed = 0.001f * Math.Abs(CameraPos.GetRotation().X);
-
-            //SpherePosition.CameraRotSpeed = 0.001f * Math.Abs(CameraPos.GetRotation().X);
 
             return true;
         }
@@ -157,8 +155,8 @@ namespace DSharpDX.System
             //keydown = Input.IsLeftArrowPressed();
             //CameraPos.MoveLeft(keydown);
 
-            keydown = Input.IsDownArrowPressed();
-            SpherePosition.LookDown(keydown);
+            //keydown = Input.IsDownArrowPressed();
+            //SpherePosition.LookDown(keydown);
             return true;
         }
         public void ShutDown()

@@ -1,6 +1,7 @@
 ﻿using DSharpDX.Engine.Colliders;
 using DSharpDX.Graphics.Models;
 using SharpDX;
+using System;
 
 namespace DSharpDX.Engine
 {
@@ -9,7 +10,6 @@ namespace DSharpDX.Engine
         public float Speed { get; set; }
 
         public Vector3 oldPos;
-
         public Collider Collider { get; private set; }
 
         public Vector3 Rotation;
@@ -35,19 +35,21 @@ namespace DSharpDX.Engine
             }
             else if (Collider != null && Collider.Collide)
             {
-                //Position = oldPos;
                 Position = new Vector3(x, y, z);
 
                 Collider.Position = new Vector3(x, y, z);
-                return;
             }
             else
                 base.SetPosition(x, y, z);
         }
 
+
         public void Stop()
         {
+            
             Position = oldPos;
+            //Console.WriteLine(this.Collider.Collide);
+            //Console.WriteLine(oldPos);
         }
 
         public void SetPosition(Vector3 pos)

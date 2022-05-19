@@ -40,9 +40,9 @@ namespace DSharpDX.Engine.Colliders
             return vertices;
         }
 
-        public bool IsCollided(GameObject game)
+        public override bool IsCollided(GameObject game)
         {
-            return true;
+            return false;
         }
     }
 }
