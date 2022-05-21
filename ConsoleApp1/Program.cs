@@ -11,7 +11,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            DSharpDX.System.System.StartRenderForm("test", 1280, 720, false, false, 3);
+            DirectLib.System.System.StartRenderForm("test", 1280, 720, false, false, 3);
         }
     }
 }
