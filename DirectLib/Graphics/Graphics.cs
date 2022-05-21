@@ -26,6 +26,8 @@ namespace DirectLib.Graphics
         //private GameObject CubeModel { get; set; }
         public Ground GroundModel { get; set; }
         public Sphere SphereModel { get; set; }
+        
+        public MapCreator MapCreator { get; set; }
 
         private List<GameObject> _gameObjects;
         #endregion
@@ -75,30 +77,28 @@ namespace DirectLib.Graphics
                     return false;
 
                 // Set the position for the sphere model.
-                SphereModel.SetPosition(-6f, 0f ,4f);
+                //SphereModel.SetPosition(-6f, 0f ,4f);
 
                 // Create the ground model object.
                 GroundModel = new Ground();
 
                 // Initialize the ground model object.
-                if (!GroundModel.Initialize(D3D.Device, "ground.txt", "texture_dirt.jpg", new Vector3(40f, 40f, 35f)))
+                if (!GroundModel.Initialize(D3D.Device, "ground.txt", "texture_dirt.jpg", new Vector3(40f, 40f, 40f)))
                     return false;
 
                 // Set the position for the ground model.
                 GroundModel.SetPosition(0f, -1f, 30f);
 
-                _gameObjects = InitLabirint();
+                _gameObjects = new List<GameObject>();
 
-                //_gameObjects = new List<GameObject>();
-                
+                MapCreator = new MapCreator(D3D.Device, _gameObjects);
+
                 _gameObjects.Add(SphereModel);
                 _gameObjects.Add(GroundModel);
 
-                DestroyBonus destroyBonus = new DestroyBonus(new Vector3(-100f, 3f, 10f), 0.5f);
-                destroyBonus.SetPosition(-6f, 1f, 8f);
-                destroyBonus.Initialize(D3D.Device, "cube.txt", "texture_grass.jpg", new Vector3(.5f, .5f, .5f));
-
-                _gameObjects.Add(destroyBonus);
+                Vector3 spherePos = MapCreator.LoadLevel1();
+                SphereModel.SetPosition(spherePos);
+                
                 #endregion
 
                 #region Data variables.
@@ -144,44 +144,6 @@ namespace DirectLib.Graphics
             }
         }
 
-        public List<GameObject> InitLabirint()
-        {
-            int[,] matrix = new int[,]
-            {
-                { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-                { 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1 },
-                { 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 },
-                { 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1 },
-                { 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1 },
-                { 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1 },
-                { 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1 },
-                { 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1 },
-                { 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1 },
-                { 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
-                { 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1 },
-                { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-            };
-
-            List<GameObject> cubes = new List<GameObject>();
-
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    if (matrix[i, j] == 1)
-                    {
-                        Cube cube = new Cube();
-                        cube.Initialize(D3D.Device, "cube.txt", "stone.bmp", new Vector3(1.75f, 1.75f, 1.75f));
-                        cube.SetPosition(i * 3.5f - 16.5f, 0f, j * 3.5f + 0);
-                        cubes.Add(cube);
-                    }
-                }
-            }
-
-            return cubes;
-        }
-
         public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot)
         {
             // Set the rotation of the camera.
@@ -194,8 +156,6 @@ namespace DirectLib.Graphics
 
             // Update the position of the light.
             Light.Position = _lightPosition;
-
-            Console.WriteLine(SphereModel.DestoyCount);
 
             if (!Render())
                 return false;
@@ -216,10 +176,21 @@ namespace DirectLib.Graphics
                     {
                         (obj as DestroyBonus).Effect(SphereModel);
                         _gameObjects.RemoveAt(i);
-                        continue;
+                    }
+                    else if (obj is UnscaleBonus)
+                    {
+                        UnscaleBonus bonus = obj as UnscaleBonus;
+                        SphereModel.Initialize(D3D.Device, "sphere.txt", "bump01.bmp", new Vector3(bonus.Scale, bonus.Scale, bonus.Scale));
+                        SphereModel.Collider = new SphereCollider(SphereModel.GetPosition(), bonus.Scale);
+                        _gameObjects.RemoveAt(i);
                     }
                     else if (SphereModel.DestoyCount > 0)
+                    {
                         _gameObjects.RemoveAt(i);
+                        SphereModel.DestoyCount--;
+                    }
+                    else if (obj is Finish)
+                        MapCreator.EndLevel();
                     else
                         return true;
                 }

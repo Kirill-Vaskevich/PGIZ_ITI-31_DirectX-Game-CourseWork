@@ -6,7 +6,7 @@ namespace DirectLib.Engine.Objects
 {
     public class GameObject : Model
     {
-        public Collider Collider { get; protected set; }
+        public Collider Collider { get; internal set; }
 
         public GameObject() { }
 

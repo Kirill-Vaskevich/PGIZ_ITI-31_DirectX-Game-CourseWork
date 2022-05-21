@@ -71,13 +71,16 @@
     <Compile Include="Engine\Colliders\Collider.cs" />
     <Compile Include="Engine\Colliders\CubeCollider.cs" />
     <Compile Include="Engine\Colliders\GroundCollider.cs" />
+    <Compile Include="Engine\MapCreator.cs" />
     <Compile Include="Engine\Objects\Bonus.cs" />
     <Compile Include="Engine\Objects\Cube.cs" />
     <Compile Include="Engine\Objects\DestroyBonus.cs" />
+    <Compile Include="Engine\Objects\Finish.cs" />
     <Compile Include="Engine\Objects\GameObject.cs" />
     <Compile Include="Engine\Colliders\SphereCollider.cs" />
     <Compile Include="Engine\Objects\Ground.cs" />
     <Compile Include="Engine\Objects\Sphere.cs" />
+    <Compile Include="Engine\Objects\UnscaleBonus.cs" />
     <Compile Include="Graphics\Graphics.cs" />
     <Compile Include="Graphics\Models\Camera.cs" />
     <Compile Include="Graphics\Data\Light.cs" />

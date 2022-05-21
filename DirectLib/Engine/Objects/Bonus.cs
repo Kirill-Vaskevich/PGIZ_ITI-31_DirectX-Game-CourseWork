@@ -16,7 +16,7 @@ namespace DirectLib.Engine.Objects
 
         public virtual void Effect(Sphere obj)
         {
-
+            
         }
     }
 }

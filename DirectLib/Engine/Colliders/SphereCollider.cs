@@ -8,6 +8,8 @@ namespace DirectLib.Engine.Colliders
     {
         private float _radius;
 
+        public float Radius { get => _radius; }
+
         public SphereCollider(Vector3 pos, float radius) : base(pos)
         {
             _radius = radius;

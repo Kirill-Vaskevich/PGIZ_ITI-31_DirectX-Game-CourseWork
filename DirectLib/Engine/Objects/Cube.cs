@@ -12,6 +12,7 @@ namespace DirectLib.Engine.Objects
 
         public Cube(Vector3 pos, float width)
         {
+            position = pos;
             Collider = new CubeCollider(pos, width);
         }
     }
