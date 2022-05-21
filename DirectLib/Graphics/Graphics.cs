@@ -1,4 +1,6 @@
-﻿using DirectLib.Graphics.Models;
+﻿using DirectLib.Engine;
+using DirectLib.Engine.Colliders;
+using DirectLib.Graphics.Models;
 using DirectLib.Graphics.Data;
 using DirectLib.Graphics.Shaders;
 using DirectLib.System;
@@ -86,8 +88,17 @@ namespace DirectLib.Graphics
                 GroundModel.SetPosition(0f, -1f, 30f);
 
                 _gameObjects = InitLabirint();
+
+                //_gameObjects = new List<GameObject>();
+                
                 _gameObjects.Add(SphereModel);
                 _gameObjects.Add(GroundModel);
+
+                DestroyBonus destroyBonus = new DestroyBonus(new Vector3(-100f, 3f, 10f), 0.5f);
+                destroyBonus.SetPosition(-6f, 1f, 8f);
+                destroyBonus.Initialize(D3D.Device, "cube.txt", "texture_grass.jpg", new Vector3(.5f, .5f, .5f));
+
+                _gameObjects.Add(destroyBonus);
                 #endregion
 
                 #region Data variables.
@@ -175,7 +186,6 @@ namespace DirectLib.Graphics
         {
             // Set the rotation of the camera.
             Camera.SetRotation(cameraRot);
-            SphereModel.SetRotation(sphereRot);
             spherePos = -spherePos;
 
             bool collide = IsCollided();
@@ -185,6 +195,8 @@ namespace DirectLib.Graphics
             // Update the position of the light.
             Light.Position = _lightPosition;
 
+            Console.WriteLine(SphereModel.DestoyCount);
+
             if (!Render())
                 return false;
             return true;
@@ -192,9 +204,26 @@ namespace DirectLib.Graphics
 
         bool IsCollided()
         {
-            foreach (GameObject obj in _gameObjects)
+            GameObject obj;
+
+            for (int i = 0; i < _gameObjects.Count; i++)
+            {
+                obj = _gameObjects[i];
+
                 if (obj is Cube && SphereModel.Collider.IsCollided(obj))
-                    return true;
+                {
+                    if (obj is DestroyBonus)
+                    {
+                        (obj as DestroyBonus).Effect(SphereModel);
+                        _gameObjects.RemoveAt(i);
+                        continue;
+                    }
+                    else if (SphereModel.DestoyCount > 0)
+                        _gameObjects.RemoveAt(i);
+                    else
+                        return true;
+                }
+            }
             return false;
         }
 
@@ -247,6 +276,7 @@ namespace DirectLib.Graphics
             Matrix lightViewMatrix = Light.ViewMatrix;
             Matrix lightProjectionMatrix = Light.ProjectionMatrix;
             Matrix worldMatrix;
+            //GameObject[] gameObjects = { CubeModel, SphereModel, GroundModel };
 
             foreach (GameObject obj in _gameObjects)
             {
@@ -254,10 +284,9 @@ namespace DirectLib.Graphics
                 worldMatrix = D3D.WorldMatrix;
                 // Setup the translation matrix for the cube model.
                 Vector3 position = obj.GetPosition();
-                //Vector3 rotation = obj.GetRotation();
+                Vector3 rotation = obj.GetRotation();
                 Matrix.Translation(position.X, position.Y, position.Z, out worldMatrix);
-                //if (obj is Sphere)
-                //    Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z, out worldMatrix);
+                //Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z, out worldMatrix);
 
                 // Put the cube model vertex and index buffers on the graphics pipeline to prepare them for drawing.
                 obj.Render(D3D.DeviceContext);
@@ -288,6 +317,7 @@ namespace DirectLib.Graphics
             Matrix lightViewMatrix = Light.ViewMatrix;
             Matrix lightOrthoMatrix = Light.ProjectionMatrix;
             Matrix worldMatrix;
+            //GameObject[] gameObjects = { CubeModel, SphereModel, GroundModel };
 
             foreach (GameObject obj in _gameObjects)
             {
@@ -296,10 +326,9 @@ namespace DirectLib.Graphics
 
                 // Setup the translation matrix for the model.
                 Vector3 pos = obj.GetPosition();
-                //Vector3 rot = obj.GetRotation();
+                Vector3 rot = obj.GetRotation();
                 Matrix.Translation(pos.X, pos.Y, pos.Z, out worldMatrix);
-                //if (obj is Sphere)
-                //    Matrix.RotationYawPitchRoll(rot.Y, rot.X, rot.Z, out worldMatrix);
+                //Matrix.RotationYawPitchRoll(rot.Y, rot.X, rot.Z, out worldMatrix);
 
                 // Render the cube model with the depth shader.
                 obj.Render(D3D.DeviceContext);

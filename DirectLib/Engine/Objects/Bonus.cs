@@ -1,13 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DirectLib.Engine.Colliders;
+﻿using SharpDX;
 
 namespace DirectLib.Engine.Objects
 {
-    public class Bonus : GameObject
+    public class Bonus : Cube
     {
+        public Bonus() : base(Vector3.Zero, 1f)
+        {
+
+        }
+
+        public Bonus(Vector3 pos, float width) : base(pos, width)
+        {
+
+        }
+
+        public virtual void Effect(Sphere obj)
+        {
+
+        }
     }
 }

@@ -50,9 +50,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DSharpDX\DSharpDX.csproj">
+    <ProjectReference Include="..\DirectLib\DirectLib.csproj">
       <Project>{5285b01f-c675-4b40-b784-0552724120b0}</Project>
-      <Name>DSharpDX</Name>
+      <Name>DirectLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
