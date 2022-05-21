@@ -6,37 +6,35 @@ namespace DSharpDX.Engine.Objects
 {
     public class GameObject : Model
     {
-        private Vector3 _oldPos;
         public Collider Collider { get; protected set; }
 
         public GameObject() { }
 
-        public Vector3 Rotation;
+        private Vector3 _oldPos;
 
+        private Vector3 _rotation;
+
+        protected Vector3 position;
 
         #region Moving
-        public override void SetPosition(float x, float y, float z)
+        public void SetPosition(float x, float y, float z)
         {
-            if (Collider != null && !Collider.Collide)
+            if (Collider.Collide)
             {
-                _oldPos = new Vector3(x, y, z);
-                base.SetPosition(x, y, z);
-                Collider.Position = new Vector3(x, y, z);
-            }
-            else if (Collider != null && Collider.Collide)
-            {
-                Position = new Vector3(x, y, z);
-
-                Collider.Position = new Vector3(x, y, z);
+                position = new Vector3(x, y, z);
+                Collider.Position = position;
             }
             else
-                base.SetPosition(x, y, z);
+            {
+                _oldPos = position;
+                position = new Vector3(x, y, z);
+                Collider.Position = position;
+            }
         }
-
 
         public void Stop()
         {
-            Position = _oldPos;
+            position = _oldPos;
         }
 
         public void SetPosition(Vector3 pos)
@@ -44,11 +42,14 @@ namespace DSharpDX.Engine.Objects
             SetPosition(pos.X, pos.Y, pos.Z);
         }
 
+        public Vector3 GetPosition()
+        {
+            return position;
+        }
+
         public void SetRotation(float x, float y, float z)
         {
-            Rotation.X = x;
-            Rotation.Y = y;
-            Rotation.Z = z;
+            _rotation = new Vector3(x, y, z);
         }
 
         public void SetRotation(Vector3 rot)
@@ -58,7 +59,7 @@ namespace DSharpDX.Engine.Objects
 
         public Vector3 GetRotation()
         {
-            return Rotation;
+            return _rotation;
         }
         #endregion
     }

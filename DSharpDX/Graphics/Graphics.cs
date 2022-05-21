@@ -62,7 +62,7 @@ namespace DSharpDX.Graphics
                 Camera = new Camera();
 
                 // Set the initial position of the camera.
-                Camera.SetPosition(0f, 30f, -10f);
+                Camera.SetPosition(0f, 25f, -10f);
                 #endregion
 
                 #region Initialize Models
@@ -71,7 +71,7 @@ namespace DSharpDX.Graphics
                 SphereModel = new Sphere();
 
                 // Initialize the sphere model object.
-                if (!SphereModel.Initialize(D3D.Device, "sphere.txt", "bump01.bmp"))
+                if (!SphereModel.Initialize(D3D.Device, "sphere.txt", "bump01.bmp", Vector3.One))
                     return false;
 
                 // Set the position for the sphere model.
@@ -81,11 +81,11 @@ namespace DSharpDX.Graphics
                 GroundModel = new Ground();
 
                 // Initialize the ground model object.
-                if (!GroundModel.Initialize(D3D.Device, "ground.txt", "texture_dirt.jpg"))
+                if (!GroundModel.Initialize(D3D.Device, "ground.txt", "texture_dirt.jpg", new Vector3(40f, 40f, 35f)))
                     return false;
 
                 // Set the position for the ground model.
-                GroundModel.SetPosition(0f, -1f, 20f);
+                GroundModel.SetPosition(0f, -1f, 30f);
 
                 _gameObjects = InitLabirint();
                 _gameObjects.Add(SphereModel);
@@ -163,7 +163,7 @@ namespace DSharpDX.Graphics
                     if (matrix[i, j] == 1)
                     {
                         Cube cube = new Cube();
-                        cube.Initialize(D3D.Device, "cube.txt", "stone.bmp");
+                        cube.Initialize(D3D.Device, "cube.txt", "stone.bmp", new Vector3(1.75f, 1.75f, 1.75f));
                         cube.SetPosition(i * 3.5f - 16.5f, 0f, j * 3.5f + 0);
                         cubes.Add(cube);
                     }
@@ -173,42 +173,14 @@ namespace DSharpDX.Graphics
             return cubes;
         }
 
-        public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot, Vector3 cameraPos)
+        public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot)
         {
             // Set the rotation of the camera.
             Camera.SetRotation(cameraRot);
             spherePos = -spherePos;
 
-            bool tmp = false;
-
-            foreach (GameObject obj in _gameObjects)
-            {
-                if (obj.Collider is CubeCollider && SphereModel.Collider.IsCollided(obj))
-                {
-                    tmp = true;
-                    for (int i = 0; i < _gameObjects.Count; i++)
-                    {
-                        if (!(_gameObjects[i] is Sphere))
-                        {
-                            _gameObjects[i].Collider.Collide = true;
-                            _gameObjects[i].Stop();
-                        }
-                    }
-                    break;
-                }
-                if (!tmp)
-                {
-                    for (int i = 0; i < _gameObjects.Count; i++)
-                    {
-                        if (!(_gameObjects[i] is Sphere))
-                        {
-                            _gameObjects[i].Collider.Collide = false;
-                            //_gameObjects[i].Stop();
-                        }
-                    }
-                }
-            }
-
+            bool collide = IsCollided();
+            StopObjects(collide);
             MoveObjects(spherePos);
 
             // Update the position of the light.
@@ -219,7 +191,28 @@ namespace DSharpDX.Graphics
             return true;
         }
 
-        public void MoveObjects(Vector3 position)
+        bool IsCollided()
+        {
+            foreach (GameObject obj in _gameObjects)
+                if (obj is Cube && SphereModel.Collider.IsCollided(obj))
+                    return true;
+            return false;
+        }
+
+        void StopObjects(bool stop)
+        {
+            for (int i = 0; i < _gameObjects.Count; i++)
+            {
+                if (!(_gameObjects[i] is Sphere))
+                {
+                    _gameObjects[i].Collider.Collide = stop;
+                    if (stop)
+                        _gameObjects[i].Stop();
+                }
+            }
+        }
+
+        void MoveObjects(Vector3 position)
         {
             for (int i = 0; i < _gameObjects.Count; i++)
             {
@@ -230,7 +223,7 @@ namespace DSharpDX.Graphics
             }
         }
 
-        #region Other
+        #region Rendering and Shutdown
 
         public bool Render()
         {

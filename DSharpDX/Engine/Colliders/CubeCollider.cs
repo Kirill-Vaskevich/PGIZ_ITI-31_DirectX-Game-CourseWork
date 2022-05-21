@@ -17,9 +17,13 @@ namespace DSharpDX.Engine.Colliders
         {
             Vector3 min = Position - Width;
             Vector3 max = Position + Width;
-            float step = 2f * Width / 10f;
+
+            float dotsCount = 10f; // dots count on fragment is dotsCount^2
+            float step = 2f * Width / dotsCount;
+
             List<Vector3> vertices = new List<Vector3>();
-            //front and back
+
+            // front and back fragment
             for (float x = min.X; x <= max.X; x += step)
             {
                 for (float y = min.Y; y <= max.Y; y += step)
@@ -28,6 +32,7 @@ namespace DSharpDX.Engine.Colliders
                     vertices.Add(new Vector3(x, y, max.Z));
                 }
             }
+            // left and right fragment
             for (float z = min.Z; z <= max.Z; z += step)
             {
                 for (float y = min.Y; y <= max.Y; y += step)
@@ -38,45 +43,6 @@ namespace DSharpDX.Engine.Colliders
             }
 
             return vertices.ToArray();
-        }
-
-        public Vector3[] GetVertices1()
-        {
-            Vector3 min = Position - Width;
-            Vector3 max = Position + Width;
-            Vector3[] vertices = new Vector3[22]
-            {
-                min, // left fragment
-                new Vector3(min.X, max.Y, min.Z),
-                new Vector3(min.X, max.Y, max.Z),
-                new Vector3(min.X, min.Y, max.Z),
-                new Vector3(min.X, Position.Y, Position.Z), // left fragment center
-                max, // right fragment
-                new Vector3(max.X, max.Y, min.Z),
-                new Vector3(max.X, min.Y, min.Z),
-                new Vector3(max.X, min.Y, max.Z),
-                new Vector3(max.X, Position.Y, Position.Z), // right fragment center
-                new Vector3(Position.X, min.Y, Position.Z), // front fragment center
-                new Vector3(Position.X, max.Y, Position.Z), // back fragment center
-                new Vector3(Position.X, Position.Y, min.Z), // up fragment center
-                new Vector3(Position.X, Position.Y, max.Z),  // bottom fragment center
-                new Vector3(min.X, Position.Y, min.Z),
-                new Vector3(min.X, Position.Y, max.Z),
-                new Vector3(max.X, Position.Y, min.Z),
-                new Vector3(max.X, Position.Y, max.Z),
-                new Vector3(Position.X, max.Y, min.Z),
-                new Vector3(Position.X, max.Y, max.Z),
-                new Vector3(min.X, max.Y, Position.Z),
-                new Vector3(max.X, max.Y, Position.Z),
-
-            };
-
-            return vertices;
-        }
-
-        public override bool IsCollided(GameObject game)
-        {
-            return false;
         }
     }
 }

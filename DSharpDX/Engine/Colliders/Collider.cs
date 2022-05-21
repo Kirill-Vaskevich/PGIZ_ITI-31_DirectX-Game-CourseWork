@@ -16,7 +16,7 @@ namespace DSharpDX.Engine.Colliders
 
         public virtual bool IsCollided(GameObject gameObject)
         {
-            return true;
+            return false;
         }
     }
 }

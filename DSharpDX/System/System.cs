@@ -21,18 +21,10 @@ namespace DSharpDX.System
         // Constructor
         public System() { }
 
-        public static void StartRenderForm(string title, int width, int height, bool vSync, bool fullScreen = true, int testTimeSeconds = 0)
-        {
-            System system = new System();
-            system.Initialize(title, width, height, vSync, fullScreen, testTimeSeconds);
-            system.RunRenderForm();
-        }
-
         // Methods
         public virtual bool Initialize(string title, int width, int height, bool vSync, bool fullScreen, int testTimeSeconds)
         {
             bool result = false;
-
 
             if (Configuration == null)
                 Configuration = new SystemConfiguration(title, width, height, fullScreen, vSync);
@@ -63,41 +55,10 @@ namespace DSharpDX.System
             // Create the position object.
             SpherePosition = new Transform();
             CameraPos = new Transform();
-            CameraPos.SphereXSpeed = 0.1f;
-            CameraPos.SphereZSpeed = 0.1f;
-            // Set the initial position of the viewer to the same as the initial camera position.
-            SpherePosition.SetPosition(SharpDX.Vector3.Zero);
-            //SpherePosition.SetRotation(Graphics.SphereModel.GetRotation());
-            CameraPos.SetPosition(SharpDX.Vector3.Zero);
 
             return result;
         }
 
-        private void InitializeWindows(string title)
-        {
-            int width = Screen.PrimaryScreen.Bounds.Width;
-            int height = Screen.PrimaryScreen.Bounds.Height;
-
-            // Initialize Window.
-            RenderForm = new RenderForm(title)
-            {
-                ClientSize = new Size(Configuration.Width, Configuration.Height),
-                FormBorderStyle = SystemConfiguration.BorderStyle
-            };
-
-            // The form must be showing in order for the handle to be used in Input and Graphics objects.
-            RenderForm.Show();
-            RenderForm.Location = new Point((width / 2) - (Configuration.Width / 2), (height / 2) - (Configuration.Height / 2));
-        }
-
-        private void RunRenderForm()
-        {
-            RenderLoop.Run(RenderForm, () =>
-            {
-                if (!Frame())
-                    ShutDown();
-            });
-        }
         public bool Frame()
         {
             // Read the user input.
@@ -113,17 +74,17 @@ namespace DSharpDX.System
             // Get the view point position/rotation.
             // Do the frame processing for the graphics object.
 
-            if (!Graphics.Frame(SpherePosition.GetPosition(), SpherePosition.GetRotation(), CameraPos.GetRotation(), CameraPos.GetPosition()))
+            if (!Graphics.Frame(SpherePosition.GetPosition(), SpherePosition.GetRotation(), CameraPos.GetRotation()))
                 return false;
 
             SpherePosition.SetPosition(SharpDX.Vector3.Zero);
             CameraPos.SetRotation(Graphics.Camera.GetRotation());
-            CameraPos.SetPosition(SharpDX.Vector3.Zero);
             SpherePosition.SphereXSpeed = 0.001f * Math.Abs(CameraPos.GetRotation().Z);
             SpherePosition.SphereZSpeed = 0.001f * Math.Abs(CameraPos.GetRotation().X);
 
             return true;
         }
+
         private bool HandleInput(float frameTime)
         {
             // Set the frame time for calculating the updated position.
@@ -153,20 +114,44 @@ namespace DSharpDX.System
             if (CameraPos.GetRotation().Z < -1)
                 SpherePosition.MoveLeft(true);
             #endregion
-
-            keydown = Input.IsLeftArrowPressed();
-            CameraPos.MoveLeft(keydown);
-
-            keydown = Input.IsRightArrowPressed();
-            CameraPos.MoveRight(keydown);
-
-            keydown = Input.IsUpArrowPressed();
-            CameraPos.MoveForward(keydown);
-
-            keydown = Input.IsDownArrowPressed();
-            CameraPos.MoveBackward(keydown);
+            
             return true;
         }
+
+        #region Other
+        public static void StartRenderForm(string title, int width, int height, bool vSync, bool fullScreen = true, int testTimeSeconds = 0)
+        {
+            System system = new System();
+            system.Initialize(title, width, height, vSync, fullScreen, testTimeSeconds);
+            system.RunRenderForm();
+        }
+
+        private void InitializeWindows(string title)
+        {
+            int width = Screen.PrimaryScreen.Bounds.Width;
+            int height = Screen.PrimaryScreen.Bounds.Height;
+
+            // Initialize Window.
+            RenderForm = new RenderForm(title)
+            {
+                ClientSize = new Size(Configuration.Width, Configuration.Height),
+                FormBorderStyle = SystemConfiguration.BorderStyle
+            };
+
+            // The form must be showing in order for the handle to be used in Input and Graphics objects.
+            RenderForm.Show();
+            RenderForm.Location = new Point((width / 2) - (Configuration.Width / 2), (height / 2) - (Configuration.Height / 2));
+        }
+
+        private void RunRenderForm()
+        {
+            RenderLoop.Run(RenderForm, () =>
+            {
+                if (!Frame())
+                    ShutDown();
+            });
+        }
+
         public void ShutDown()
         {
             ShutdownWindows();
@@ -185,10 +170,12 @@ namespace DSharpDX.System
             Input = null;
             Configuration = null;
         }
+
         private void ShutdownWindows()
         {
             RenderForm?.Dispose();
             RenderForm = null;
         }
+        #endregion
     }
 }

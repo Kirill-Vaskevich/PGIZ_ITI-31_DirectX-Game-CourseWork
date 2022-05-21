@@ -37,18 +37,16 @@ namespace DSharpDX.Graphics.Models
         private int VertexCount { get; set; }
         public int IndexCount { get; private set; }
         public Texture Texture { get; set; }
-        public DModelFormat[] ModelObject { get; private set; }
-
-        protected Vector3 Position;
+        public DModelFormat[] ModelObject { get; protected set; }
 
         // Constructor 
         public Model() { }
 
         // Methods
-        public bool Initialize(SharpDX.Direct3D11.Device device, string modelFormatFilename, string textureFileNames)
+        public virtual bool Initialize(SharpDX.Direct3D11.Device device, string modelFormatFilename, string textureFileNames, Vector3 scale)
         {
             // Load in the model data.
-            if (!LoadModel(modelFormatFilename))
+            if (!LoadModel(modelFormatFilename, scale))
                 return false;
 
             // Initialize the vertex and index buffer.
@@ -61,7 +59,7 @@ namespace DSharpDX.Graphics.Models
 
             return true;
         }
-        protected bool LoadModel(string modelFormatFilename)
+        protected bool LoadModel(string modelFormatFilename, Vector3 scale)
         {
             string filename = modelFormatFilename;
             modelFormatFilename = SystemConfiguration.ModelFilePath + modelFormatFilename;
@@ -82,25 +80,15 @@ namespace DSharpDX.Graphics.Models
 
                     ModelObject[i - 4] = new DModelFormat()
                     {
-                        x = float.Parse(modelArray[0], CultureInfo.GetCultureInfo("En-en")),
-                        y = float.Parse(modelArray[1], CultureInfo.GetCultureInfo("En-en")),
-                        z = float.Parse(modelArray[2], CultureInfo.GetCultureInfo("En-en")),
+                        x = scale.X * float.Parse(modelArray[0], CultureInfo.GetCultureInfo("En-en")),
+                        y = scale.Y * float.Parse(modelArray[1], CultureInfo.GetCultureInfo("En-en")),
+                        z = scale.Z * float.Parse(modelArray[2], CultureInfo.GetCultureInfo("En-en")),
                         tu = float.Parse(modelArray[3], CultureInfo.GetCultureInfo("En-en")),
                         tv = float.Parse(modelArray[4], CultureInfo.GetCultureInfo("En-en")),
                         nx = float.Parse(modelArray[5], CultureInfo.GetCultureInfo("En-en")),
                         ny = float.Parse(modelArray[6], CultureInfo.GetCultureInfo("En-en")),
                         nz = float.Parse(modelArray[7], CultureInfo.GetCultureInfo("En-en"))
                     };
-                }
-
-                if (filename.Equals("cube.txt"))
-                {
-                    for (int j = 0; j < ModelObject.Length; j++)
-                    {
-                        ModelObject[j].x *= 1.75f;
-                        ModelObject[j].y *= 1.75f;
-                        ModelObject[j].z *= 1.75f;
-                    }
                 }
 
                 return true;
@@ -200,17 +188,6 @@ namespace DSharpDX.Graphics.Models
             deviceContext.InputAssembler.SetIndexBuffer(IndexBuffer, Format.R32_UInt, 0);
             // Set the type of the primitive that should be rendered from this vertex buffer, in this case triangles.
             deviceContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
-        }
-        public virtual void SetPosition(float x, float y, float z)
-        {
-            Position.X = x;
-            Position.Y = y;
-            Position.Z = z;
-        }
-
-        public Vector3 GetPosition()
-        {
-            return Position;
         }
     }
 }
