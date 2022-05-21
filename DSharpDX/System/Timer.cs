@@ -25,7 +25,7 @@ namespace DSharpDX.System
             _StopWatch = Stopwatch.StartNew();
 
             // Find out how many times the frequency counter ticks every millisecond.
-            m_ticksPerMs = (float)(Stopwatch.Frequency / 1000.0f);
+            m_ticksPerMs = (float)(Stopwatch.Frequency / 1000f);
 
             return true;
         }

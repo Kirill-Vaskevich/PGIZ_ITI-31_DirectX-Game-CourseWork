@@ -302,7 +302,7 @@ namespace DSharpDX.Graphics.Shaders
                 DLightBufferType2 lightBuffer2 = new DLightBufferType2()
                 {
                      lightPosition = lightPosition,
-                     padding = 0.0f
+                     padding = 0f
                 };
                 mappedResource.Write(lightBuffer2);
 

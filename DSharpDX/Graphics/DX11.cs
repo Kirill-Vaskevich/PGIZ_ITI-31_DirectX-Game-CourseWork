@@ -170,13 +170,13 @@ namespace DSharpDX.Graphics
                     IsAntialiasedLineEnabled = false,
                     CullMode = CullMode.Back,
                     DepthBias = 0,
-                    DepthBiasClamp = 0.0f,
+                    DepthBiasClamp = 0f,
                     IsDepthClipEnabled = true,
                     FillMode = FillMode.Solid,
                     IsFrontCounterClockwise = false,
                     IsMultisampleEnabled = false,
                     IsScissorEnabled = false,
-                    SlopeScaledDepthBias = 0.0f
+                    SlopeScaledDepthBias = 0f
                 };
 
                 // Create the rasterizer state from the description we just filled out.
@@ -192,10 +192,10 @@ namespace DSharpDX.Graphics
                 {
                     Width = configuration.Width,
                     Height = configuration.Height,
-                    MinDepth = 0.0f,
-                    MaxDepth = 1.0f,
-                    X = 0.0f,
-                    Y = 0.0f
+                    MinDepth = 0f,
+                    MaxDepth = 1f,
+                    X = 0f,
+                    Y = 0f
                 };
                 DeviceContext.Rasterizer.SetViewport(ViewPort);
                 #endregion
@@ -246,7 +246,7 @@ namespace DSharpDX.Graphics
             // Clear the back buffer.
             DeviceContext.ClearRenderTargetView(RenderTargetView, color);
             // Clear the depth buffer.
-            DeviceContext.ClearDepthStencilView(DepthStencilView, DepthStencilClearFlags.Depth, 1.0f, 0);
+            DeviceContext.ClearDepthStencilView(DepthStencilView, DepthStencilClearFlags.Depth, 1f, 0);
         }
         public void EndScene()
         {

@@ -7,6 +7,7 @@ using DSharpDX.System;
 using SharpDX;
 using System;
 using System.Collections.Generic;
+using DSharpDX.Engine.Objects;
 
 namespace DSharpDX.Graphics
 {
@@ -23,8 +24,8 @@ namespace DSharpDX.Graphics
 
         #region Models
         //private GameObject CubeModel { get; set; }
-        public GameObject GroundModel { get; set; }
-        public GameObject SphereModel { get; set; }
+        public Ground GroundModel { get; set; }
+        public Sphere SphereModel { get; set; }
 
         private List<GameObject> _gameObjects;
         #endregion
@@ -61,45 +62,32 @@ namespace DSharpDX.Graphics
                 Camera = new Camera();
 
                 // Set the initial position of the camera.
-                Camera.SetPosition(0.0f, 10.0f, -10.0f);
+                Camera.SetPosition(0f, 30f, -10f);
                 #endregion
 
                 #region Initialize Models
-                // Create the cube model object.
-
-                //_gameObjects = new List<GameObject>();
-                _gameObjects = InitLabirint();
-
-                //CubeModel = new GameObject(ColliderType.Cube);
-
-                //// Initialize the cube model object.
-                //if (!CubeModel.Initialize(D3D.Device, "cube.txt", "wall01sm.bmp"))
-                //    return false;
-
-                //// Set the position for the cube model.
-                //CubeModel.SetPosition(-2.0f, 0.0f, 0.0f);
 
                 // Create the sphere model object.
-                SphereModel = new GameObject(ColliderType.Sphere);
+                SphereModel = new Sphere();
 
                 // Initialize the sphere model object.
-                if (!SphereModel.Initialize(D3D.Device, "sphere.txt", "ice01.bmp"))
+                if (!SphereModel.Initialize(D3D.Device, "sphere.txt", "bump01.bmp"))
                     return false;
 
                 // Set the position for the sphere model.
-                SphereModel.SetPosition(2.0f, 0.0f, 0.0f);
+                SphereModel.SetPosition(-6f, 0f ,4f);
 
                 // Create the ground model object.
-                GroundModel = new GameObject();
+                GroundModel = new Ground();
 
                 // Initialize the ground model object.
-                if (!GroundModel.Initialize(D3D.Device, "ground.txt", "metal001.bmp"))
+                if (!GroundModel.Initialize(D3D.Device, "ground.txt", "texture_dirt.jpg"))
                     return false;
 
                 // Set the position for the ground model.
-                GroundModel.SetPosition(0.0f, -1.0f, 1.0f);
+                GroundModel.SetPosition(0f, -1f, 20f);
 
-                //_gameObjects.Add(CubeModel);
+                _gameObjects = InitLabirint();
                 _gameObjects.Add(SphereModel);
                 _gameObjects.Add(GroundModel);
                 #endregion
@@ -109,9 +97,9 @@ namespace DSharpDX.Graphics
                 Light = new Light();
 
                 // Initialize the light object.
-                Light.SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
-                Light.SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-                Light.SetLookAt(0.0f, 0.0f, 0.0f);
+                Light.SetAmbientColor(0.15f, 0.15f, 0.15f, 1f);
+                Light.SetDiffuseColor(1f, 1f, 1f, 1f);
+                Light.SetLookAt(0f, 0f, 0f);
                 Light.GenerateProjectionMatrix();
 
                 // Create the render to texture object.
@@ -149,53 +137,100 @@ namespace DSharpDX.Graphics
 
         public List<GameObject> InitLabirint()
         {
-            GameObject[,] matrix = new GameObject[6, 5];
-            List<GameObject> objects = new List<GameObject>();
+            int[,] matrix = new int[,]
+            {
+                { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+                { 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1 },
+                { 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 },
+                { 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1 },
+                { 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1 },
+                { 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1 },
+                { 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1 },
+                { 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1 },
+                { 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1 },
+                { 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+                { 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1 },
+                { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+            };
+
+            List<GameObject> cubes = new List<GameObject>();
 
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    Random random = new Random();
-                    int digit = random.Next(0, 5);
-                    if (digit == 2)
-                        continue;
-                    matrix[i, j] = new GameObject(ColliderType.Cube);
-                    matrix[i, j].Initialize(D3D.Device, "cube.txt", "wall01sm.bmp");
-                    matrix[i, j].SetPosition(i * 2 - 5, 0, j * 2 - 4);
-                    objects.Add(matrix[i, j]);
-                    //Console.WriteLine(matrix[i, j].GetPosition());
-                    //Console.WriteLine("collider " + matrix[i, j].Collider.Position);
+                    if (matrix[i, j] == 1)
+                    {
+                        Cube cube = new Cube();
+                        cube.Initialize(D3D.Device, "cube.txt", "stone.bmp");
+                        cube.SetPosition(i * 3.5f - 16.5f, 0f, j * 3.5f + 0);
+                        cubes.Add(cube);
+                    }
                 }
             }
 
-            return objects;
+            return cubes;
         }
 
-        public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot)
+        public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot, Vector3 cameraPos)
         {
             // Set the rotation of the camera.
             Camera.SetRotation(cameraRot);
+            spherePos = -spherePos;
 
-            SphereModel.SetPosition(spherePos);
+            bool tmp = false;
 
             foreach (GameObject obj in _gameObjects)
             {
                 if (obj.Collider is CubeCollider && SphereModel.Collider.IsCollided(obj))
                 {
-                    SphereModel.Stop();
+                    tmp = true;
+                    for (int i = 0; i < _gameObjects.Count; i++)
+                    {
+                        if (!(_gameObjects[i] is Sphere))
+                        {
+                            _gameObjects[i].Collider.Collide = true;
+                            _gameObjects[i].Stop();
+                        }
+                    }
                     break;
                 }
+                if (!tmp)
+                {
+                    for (int i = 0; i < _gameObjects.Count; i++)
+                    {
+                        if (!(_gameObjects[i] is Sphere))
+                        {
+                            _gameObjects[i].Collider.Collide = false;
+                            //_gameObjects[i].Stop();
+                        }
+                    }
+                }
             }
+
+            MoveObjects(spherePos);
 
             // Update the position of the light.
             Light.Position = _lightPosition;
 
             if (!Render())
                 return false;
-
             return true;
         }
+
+        public void MoveObjects(Vector3 position)
+        {
+            for (int i = 0; i < _gameObjects.Count; i++)
+            {
+                if (_gameObjects[i] is Sphere)
+                    continue;
+                Vector3 pos = _gameObjects[i].GetPosition();
+                _gameObjects[i].SetPosition(pos.X + position.X, pos.Y + position.Y, pos.Z + position.Z);
+            }
+        }
+
+        #region Other
 
         public bool Render()
         {
@@ -204,7 +239,7 @@ namespace DSharpDX.Graphics
                 return false;
 
             // Clear the buffers to begin the scene.
-            D3D.BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+            D3D.BeginScene(0f, 0f, 0f, 1f);
 
             // Generate the view matrix based on the camera's position.
             Camera.Render();
@@ -252,7 +287,7 @@ namespace DSharpDX.Graphics
             RenderTexture.SetRenderTarget(D3D.DeviceContext);
 
             // Clear the render to texture.
-            RenderTexture.ClearRenderTarget(D3D.DeviceContext, 0.0f, 0.0f, 0.0f, 1.0f);
+            RenderTexture.ClearRenderTarget(D3D.DeviceContext, 0f, 0f, 0f, 1f);
 
             // Generate the light view matrix based on the light's position.
             Light.GenerateViewMatrix();
@@ -289,7 +324,6 @@ namespace DSharpDX.Graphics
             return true;
         }
 
-        #region Other
 
         public void Shutdown()
         {

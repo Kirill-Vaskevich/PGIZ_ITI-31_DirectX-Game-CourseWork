@@ -95,12 +95,12 @@ namespace DSharpDX.Graphics.Data
                 // Setup the viewport for rendering.
                 ViewPort = new ViewportF()
                 {
-                    Width = 1024.0f,
-                    Height = 1024.0f,
-                    MinDepth = 0.0f,
-                    MaxDepth = 1.0f,
-                    X = 0.0f,
-                    Y = 0.0f
+                    Width = 1024f,
+                    Height = 1024f,
+                    MinDepth = 0f,
+                    MaxDepth = 1f,
+                    X = 0f,
+                    Y = 0f
                 };
 
                 return true;
@@ -140,7 +140,7 @@ namespace DSharpDX.Graphics.Data
             context.ClearRenderTargetView(RenderTargetView, color);
 
             // Clear the depth buffer.
-            context.ClearDepthStencilView(DepthStencilView, DepthStencilClearFlags.Depth, 1.0f, 0);
+            context.ClearDepthStencilView(DepthStencilView, DepthStencilClearFlags.Depth, 1f, 0);
         }
     }
 }

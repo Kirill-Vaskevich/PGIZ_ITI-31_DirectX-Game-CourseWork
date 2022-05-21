@@ -59,9 +59,6 @@ namespace DSharpDX.Graphics.Input
 
         public void SetRotation(float pitch, float yaw, float roll)
         {
-            //if (Pitch != pitch || Roll != roll)
-            //    Console.WriteLine(GetRotation());
-
             Pitch = pitch;
             Yaw = yaw;
             Roll = roll;

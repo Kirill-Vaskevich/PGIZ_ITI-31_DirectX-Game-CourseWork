@@ -34,8 +34,8 @@ namespace DSharpDX.Graphics.Data
         public void GenerateProjectionMatrix()
         {
             // Setup field of view and screen aspect for a square light source.
-            float fieldOfView = (float)Math.PI / 2.0f;
-            float screenAspect = 1.0f;
+            float fieldOfView = (float)Math.PI / 2f;
+            float screenAspect = 1f;
 
             // Create the projection matrix for the light.
             ProjectionMatrix = Matrix.PerspectiveFovLH(fieldOfView, screenAspect, SystemConfiguration.ScreenNear, SystemConfiguration.ScreenDepth);

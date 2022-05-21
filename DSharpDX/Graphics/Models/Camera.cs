@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using System;
 
 namespace DSharpDX.Graphics.Models
 {
@@ -13,6 +14,8 @@ namespace DSharpDX.Graphics.Models
         private float Roll { get; set; }
         public Matrix ViewMatrix { get; private set; }
 
+        public Vector3 LookAt = new Vector3(0, -1, 1);
+        // 
         // Constructor
         public Camera() { }
 
@@ -22,6 +25,11 @@ namespace DSharpDX.Graphics.Models
             X = x;
             Y = y;
             Z = z;
+        }
+
+        public void SetPosition(Vector3 pos)
+        {
+            SetPosition(pos.X, pos.Y, pos.Z);
         }
         public void SetRotation(float x, float y, float z)
         {
@@ -39,6 +47,7 @@ namespace DSharpDX.Graphics.Models
         {
             SetRotation(rot.X, rot.Y, rot.Z);
         }
+
         public Vector3 GetPosition()
         {
             return new Vector3(X, Y, Z);
@@ -50,7 +59,7 @@ namespace DSharpDX.Graphics.Models
             Vector3 position = new Vector3(X, Y, Z);
 
             // Setup where the camera is looking  forwardby default.
-            Vector3 lookAt = new Vector3(0, -1f, 1.0f);
+            Vector3 lookAt = new Vector3(0, -1f, 1f);
 
             // Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
             float pitch = Pitch * 0.0174532925f;
@@ -77,7 +86,7 @@ namespace DSharpDX.Graphics.Models
             Vector3 position = new Vector3(X, Y, Z);
 
             // Setup where the camera is looking  forwardby default.
-            Vector3 lookAt = new Vector3(0, -1f, 1.0f);
+            Vector3 lookAt = LookAt;
 
             // Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
             float pitch = Pitch * 0.0174532925f;
@@ -90,7 +99,6 @@ namespace DSharpDX.Graphics.Models
             // Transform the lookAt and up vector by the rotation matrix so the view is correctly rotated at the origin.
             position = Vector3.TransformCoordinate(position, rotationMatrix);
             Vector3 up = Vector3.TransformCoordinate(Vector3.UnitY, rotationMatrix);
-
             // Finally create the view matrix from the three updated vectors.
             ViewMatrix = Matrix.LookAtLH(position, lookAt, up)/* * Matrix.Translation(X, Y, Z)*/;
         }

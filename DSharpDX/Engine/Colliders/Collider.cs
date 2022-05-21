@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using DSharpDX.Engine.Objects;
 
 namespace DSharpDX.Engine.Colliders
 {
@@ -6,7 +7,7 @@ namespace DSharpDX.Engine.Colliders
     {
         public Vector3 Position { get; protected internal set; }
 
-        public bool Collide { get; protected set; }
+        public bool Collide { get; set; }
 
         public Collider(Vector3 pos)
         {

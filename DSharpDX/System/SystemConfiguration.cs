@@ -47,8 +47,8 @@ namespace DSharpDX.System
         {
             FullScreen = false;
             VerticalSyncEnabled = false;
-            ScreenDepth = 100.0f;   // 1000.0f
-            ScreenNear = 1.0f;      // 0.1f
+            ScreenDepth = 100f;   // 1000f
+            ScreenNear = 1f;      // 0.1f
             BorderStyle = FormBorderStyle.None;
 
             ShaderFilePath = @"Externals\Shaders\";

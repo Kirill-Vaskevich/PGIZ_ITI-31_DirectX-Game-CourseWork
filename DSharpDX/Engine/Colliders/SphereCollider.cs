@@ -1,5 +1,6 @@
 ﻿using SharpDX;
 using System;
+using DSharpDX.Engine.Objects;
 
 namespace DSharpDX.Engine.Colliders
 {
@@ -25,7 +26,6 @@ namespace DSharpDX.Engine.Colliders
 
                 if (r2 <= Math.Pow(_radius, 2))
                 {
-                    Console.WriteLine(Position);
                     Collide = true;
                     return true;
                 }

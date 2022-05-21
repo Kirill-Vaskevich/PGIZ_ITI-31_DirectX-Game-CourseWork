@@ -70,9 +70,12 @@
     <Compile Include="Engine\Colliders\ColliderType.cs" />
     <Compile Include="Engine\Colliders\Collider.cs" />
     <Compile Include="Engine\Colliders\CubeCollider.cs" />
-    <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="Engine\Colliders\GroundCollider.cs" />
+    <Compile Include="Engine\Objects\Cube.cs" />
+    <Compile Include="Engine\Objects\GameObject.cs" />
     <Compile Include="Engine\Colliders\SphereCollider.cs" />
-    <Compile Include="Engine\Sphere.cs" />
+    <Compile Include="Engine\Objects\Ground.cs" />
+    <Compile Include="Engine\Objects\Sphere.cs" />
     <Compile Include="Graphics\Models\Camera.cs" />
     <Compile Include="Graphics\Data\Light.cs" />
     <Compile Include="Graphics\Data\RenderTexture.cs" />

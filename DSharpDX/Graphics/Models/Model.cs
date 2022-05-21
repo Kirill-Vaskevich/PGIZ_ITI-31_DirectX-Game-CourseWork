@@ -63,6 +63,7 @@ namespace DSharpDX.Graphics.Models
         }
         protected bool LoadModel(string modelFormatFilename)
         {
+            string filename = modelFormatFilename;
             modelFormatFilename = SystemConfiguration.ModelFilePath + modelFormatFilename;
             List<string> lines = null;
 
@@ -90,6 +91,16 @@ namespace DSharpDX.Graphics.Models
                         ny = float.Parse(modelArray[6], CultureInfo.GetCultureInfo("En-en")),
                         nz = float.Parse(modelArray[7], CultureInfo.GetCultureInfo("En-en"))
                     };
+                }
+
+                if (filename.Equals("cube.txt"))
+                {
+                    for (int j = 0; j < ModelObject.Length; j++)
+                    {
+                        ModelObject[j].x *= 1.75f;
+                        ModelObject[j].y *= 1.75f;
+                        ModelObject[j].z *= 1.75f;
+                    }
                 }
 
                 return true;

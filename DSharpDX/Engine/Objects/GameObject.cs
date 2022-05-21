@@ -1,35 +1,25 @@
 ﻿using DSharpDX.Engine.Colliders;
 using DSharpDX.Graphics.Models;
 using SharpDX;
-using System;
 
-namespace DSharpDX.Engine
+namespace DSharpDX.Engine.Objects
 {
     public class GameObject : Model
     {
-        public float Speed { get; set; }
-
-        public Vector3 oldPos;
-        public Collider Collider { get; private set; }
-
-        public Vector3 Rotation;
-
-        public GameObject(ColliderType type)
-        {
-            if (type == ColliderType.Sphere)
-                Collider = new SphereCollider(new Vector3(2f, 4f, 0f), 1f);
-
-            else if (type == ColliderType.Cube)
-                Collider = new CubeCollider(new Vector3(-2f, 2f, 0f), 1f);
-        }
+        private Vector3 _oldPos;
+        public Collider Collider { get; protected set; }
 
         public GameObject() { }
 
+        public Vector3 Rotation;
+
+
+        #region Moving
         public override void SetPosition(float x, float y, float z)
         {
             if (Collider != null && !Collider.Collide)
             {
-                oldPos = new Vector3(x, y, z);
+                _oldPos = new Vector3(x, y, z);
                 base.SetPosition(x, y, z);
                 Collider.Position = new Vector3(x, y, z);
             }
@@ -46,10 +36,7 @@ namespace DSharpDX.Engine
 
         public void Stop()
         {
-            
-            Position = oldPos;
-            //Console.WriteLine(this.Collider.Collide);
-            //Console.WriteLine(oldPos);
+            Position = _oldPos;
         }
 
         public void SetPosition(Vector3 pos)
@@ -73,5 +60,6 @@ namespace DSharpDX.Engine
         {
             return Rotation;
         }
+        #endregion
     }
 }

@@ -1,4 +1,6 @@
 ﻿using SharpDX;
+using System.Collections.Generic;
+using DSharpDX.Engine.Objects;
 
 namespace DSharpDX.Engine.Colliders
 {
@@ -15,7 +17,34 @@ namespace DSharpDX.Engine.Colliders
         {
             Vector3 min = Position - Width;
             Vector3 max = Position + Width;
-            Vector3[] vertices = new Vector3[18]
+            float step = 2f * Width / 10f;
+            List<Vector3> vertices = new List<Vector3>();
+            //front and back
+            for (float x = min.X; x <= max.X; x += step)
+            {
+                for (float y = min.Y; y <= max.Y; y += step)
+                {
+                    vertices.Add(new Vector3(x, y, min.Z));
+                    vertices.Add(new Vector3(x, y, max.Z));
+                }
+            }
+            for (float z = min.Z; z <= max.Z; z += step)
+            {
+                for (float y = min.Y; y <= max.Y; y += step)
+                {
+                    vertices.Add(new Vector3(min.X, y, z));
+                    vertices.Add(new Vector3(max.X, y, z));
+                }
+            }
+
+            return vertices.ToArray();
+        }
+
+        public Vector3[] GetVertices1()
+        {
+            Vector3 min = Position - Width;
+            Vector3 max = Position + Width;
+            Vector3[] vertices = new Vector3[22]
             {
                 min, // left fragment
                 new Vector3(min.X, max.Y, min.Z),
@@ -34,7 +63,12 @@ namespace DSharpDX.Engine.Colliders
                 new Vector3(min.X, Position.Y, min.Z),
                 new Vector3(min.X, Position.Y, max.Z),
                 new Vector3(max.X, Position.Y, min.Z),
-                new Vector3(max.X, Position.Y, max.Z)
+                new Vector3(max.X, Position.Y, max.Z),
+                new Vector3(Position.X, max.Y, min.Z),
+                new Vector3(Position.X, max.Y, max.Z),
+                new Vector3(min.X, max.Y, Position.Z),
+                new Vector3(max.X, max.Y, Position.Z),
+
             };
 
             return vertices;
