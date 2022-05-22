@@ -8,6 +8,7 @@ using SharpDX;
 using System;
 using System.Collections.Generic;
 using DirectLib.Engine.Objects;
+using DirectLib.Audio;
 
 namespace DirectLib.Graphics
 {
@@ -16,6 +17,8 @@ namespace DirectLib.Graphics
         // Properties
         private DX11 D3D { get; set; }
         public Camera Camera { get; set; }
+
+        public DXAudio DXAudio { get; set; }
 
         #region Data
         private Light Light { get; set; }
@@ -57,6 +60,8 @@ namespace DirectLib.Graphics
                 // Initialize the Direct3D object.
                 if (!D3D.Initialize(configuration, windowHandle))
                     return false;
+
+                DXAudio = new DXAudio();
                 #endregion
 
                 #region Initialize Camera
@@ -173,26 +178,32 @@ namespace DirectLib.Graphics
                     {
                         (obj as DestroyBonus).Effect(SphereModel);
                         _gameObjects.RemoveAt(i);
+                        DXAudio.PlaySound(SoundType.Bonus);
                     }
                     else if (obj is UnscaleBonus)
                     {
                         UnscaleBonus bonus = obj as UnscaleBonus;
                         SphereModel.Initialize(D3D.Device, "sphere.txt", "bump01.bmp", new Vector3(bonus.Scale, bonus.Scale, bonus.Scale));
                         SphereModel.Collider = new SphereCollider(SphereModel.GetPosition(), bonus.Scale);
+                        DXAudio.PlaySound(SoundType.Bonus);
                         _gameObjects.RemoveAt(i);
                     }
                     else if (SphereModel.DestoyCount > 0)
                     {
+                        DXAudio.PlaySound(SoundType.Collide);
                         _gameObjects.RemoveAt(i);
                         SphereModel.DestoyCount--;
                     }
                     else if (obj is Finish)
                     {
+                        DXAudio.PlaySound(SoundType.Win);
                         MapCreator.EndLevel();
                         MapCreator.Level2();
                     }
                     else
+                    {
                         return true;
+                    }
                 }
             }
             return false;
