@@ -76,9 +76,6 @@ namespace DirectLib.Graphics
                 if (!SphereModel.Initialize(D3D.Device, "sphere.txt", "bump01.bmp", Vector3.One))
                     return false;
 
-                // Set the position for the sphere model.
-                //SphereModel.SetPosition(-6f, 0f ,4f);
-
                 // Create the ground model object.
                 GroundModel = new Ground();
 
@@ -96,7 +93,7 @@ namespace DirectLib.Graphics
                 _gameObjects.Add(SphereModel);
                 _gameObjects.Add(GroundModel);
 
-                Vector3 spherePos = MapCreator.LoadLevel1();
+                Vector3 spherePos = MapCreator.Level1();
                 SphereModel.SetPosition(spherePos);
                 
                 #endregion
@@ -190,7 +187,10 @@ namespace DirectLib.Graphics
                         SphereModel.DestoyCount--;
                     }
                     else if (obj is Finish)
+                    {
                         MapCreator.EndLevel();
+                        MapCreator.Level2();
+                    }
                     else
                         return true;
                 }
