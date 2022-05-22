@@ -78,14 +78,14 @@ namespace DirectLib.Graphics
                 SphereModel = new Sphere();
 
                 // Initialize the sphere model object.
-                if (!SphereModel.Initialize(D3D.Device, "sphere.txt", "bump01.bmp", Vector3.One))
+                if (!SphereModel.Initialize(D3D.Device, Vector3.One))
                     return false;
 
                 // Create the ground model object.
                 GroundModel = new Ground();
 
                 // Initialize the ground model object.
-                if (!GroundModel.Initialize(D3D.Device, "ground.txt", "texture_dirt.jpg", new Vector3(40f, 40f, 40f)))
+                if (!GroundModel.Initialize(D3D.Device, new Vector3(40f, 40f, 40f)))
                     return false;
 
                 // Set the position for the ground model.
@@ -199,6 +199,7 @@ namespace DirectLib.Graphics
                         DXAudio.PlaySound(SoundType.Win);
                         MapCreator.EndLevel();
                         MapCreator.Level2();
+                        GroundModel.SetPosition(0f, -1f, 30f);
                     }
                     else
                     {

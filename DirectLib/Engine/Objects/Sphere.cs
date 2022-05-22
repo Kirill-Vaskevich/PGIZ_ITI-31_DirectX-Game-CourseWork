@@ -1,5 +1,6 @@
 ﻿using DirectLib.Engine.Colliders;
 using SharpDX;
+using SharpDX.Direct3D11;
 
 namespace DirectLib.Engine.Objects
 {
@@ -16,6 +17,11 @@ namespace DirectLib.Engine.Objects
         {
             if (DestoyCount > 0)
                 cube.Shutdown();
+        }
+
+        public bool Initialize(Device device, Vector3 scale)
+        {
+            return base.Initialize(device, "sphere.txt", "bump01.bmp", scale);
         }
     }
 }

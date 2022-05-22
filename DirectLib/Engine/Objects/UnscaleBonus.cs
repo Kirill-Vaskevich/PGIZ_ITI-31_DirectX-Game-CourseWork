@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using SharpDX.Direct3D11;
 
 namespace DirectLib.Engine.Objects
 {
@@ -10,6 +11,11 @@ namespace DirectLib.Engine.Objects
         {
             SetPosition(pos);
             Scale = scale;
+        }
+
+        public bool Initialize(Device device, Vector3 scale)
+        {
+            return base.Initialize(device, "cube.txt", "seafloor.bmp", scale);
         }
     }
 }

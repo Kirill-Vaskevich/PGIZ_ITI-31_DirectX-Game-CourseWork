@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using SharpDX.Direct3D11;
 
 namespace DirectLib.Engine.Objects
 {
@@ -12,6 +13,11 @@ namespace DirectLib.Engine.Objects
         public override void Effect(Sphere obj)
         {
             obj.DestoyCount++;
+        }
+
+        public bool Initialize(Device device, Vector3 scale)
+        {
+            return base.Initialize(device, "cube.txt", "texture_grass.jpg", scale);
         }
     }
 }

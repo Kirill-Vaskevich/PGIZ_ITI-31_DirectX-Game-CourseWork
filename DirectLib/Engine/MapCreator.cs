@@ -78,26 +78,26 @@ namespace DirectLib.Engine
                     if (map[i, j] == 1)
                     {
                         Cube cube = new Cube();
-                        cube.Initialize(_device, "cube.txt", "stone.bmp", new Vector3(1.75f, 1.75f, 1.75f));
+                        cube.Initialize(_device, new Vector3(1.75f, 1.75f, 1.75f));
                         cube.SetPosition(pos);
                         _gameObjects.Add(cube);
                     }
                     else if (map[i, j] == 2)
                     {
                         DestroyBonus bonus = new DestroyBonus(pos, 0.5f);
-                        bonus.Initialize(_device, "cube.txt", "texture_grass.jpg", new Vector3(.5f, .5f, .5f));
+                        bonus.Initialize(_device, new Vector3(.5f, .5f, .5f));
                         _gameObjects.Add(bonus);
                     }
                     else if (map[i, j] == 3)
                     {
                         UnscaleBonus bonus = new UnscaleBonus(pos, 0.5f, .75f);
-                        bonus.Initialize(_device, "cube.txt", "seafloor.bmp", new Vector3(.5f, .5f, .5f));
+                        bonus.Initialize(_device, new Vector3(.5f, .5f, .5f));
                         _gameObjects.Add(bonus);
                     }
                     else if (map[i, j] == 4)
                     {
                         Finish finish = new Finish(pos, 0.5f);
-                        finish.Initialize(_device, "cube.txt", "bump.bmp", new Vector3(.5f, .5f, .5f));
+                        finish.Initialize(_device, new Vector3(.5f, .5f, .5f));
                         _gameObjects.Add(finish);
                     }
                     else if (map[i, j] == 5)
