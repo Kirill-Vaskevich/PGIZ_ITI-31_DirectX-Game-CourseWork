@@ -75,7 +75,7 @@ namespace DirectLib.Graphics.Models
             position = Vector3.TransformCoordinate(position, rotationMatrix);
             Vector3 up = Vector3.TransformCoordinate(Vector3.UnitY, rotationMatrix);
             // Finally create the view matrix from the three updated vectors.
-            ViewMatrix = Matrix.LookAtLH(position, lookAt, up)/* * Matrix.Translation(X, Y, Z)*/;
+            ViewMatrix = Matrix.LookAtLH(position, lookAt, up);
         }
     }
 }

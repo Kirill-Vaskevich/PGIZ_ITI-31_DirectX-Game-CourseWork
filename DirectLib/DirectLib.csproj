@@ -97,7 +97,7 @@
     <Compile Include="Graphics\Input\Transform.cs" />
     <Compile Include="Graphics\Models\Model.cs" />
     <Compile Include="Graphics\Shaders\DepthShader.cs" />
-    <Compile Include="Graphics\Shaders\ShadowShader.cs" />
+    <Compile Include="Graphics\Shaders\LightShader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\System.cs" />
     <Compile Include="System\SystemConfiguration.cs" />

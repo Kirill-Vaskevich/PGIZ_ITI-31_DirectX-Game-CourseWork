@@ -205,24 +205,6 @@ namespace DirectLib.Graphics.Input
             // Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
             return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.Escape);
         }
-        public bool IsLeftArrowPressed()
-        {
-            // Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
-            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.Left);
-        }
-        public bool IsRightArrowPressed()
-        {
-            // Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
-            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.Right);
-        }
-        public bool IsUpArrowPressed()
-        {
-            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.Up);
-        }
-        public bool IsDownArrowPressed()
-        {
-            return _KeyboardState != null && _KeyboardState.PressedKeys.Contains(Key.Down);
-        }
 
         public bool IsWPressed()
         {

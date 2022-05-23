@@ -13,12 +13,6 @@ namespace DirectLib.Engine.Objects
             Collider = new SphereCollider(Vector3.Zero, 1f);
         }
 
-        public void DestroyBlock(Cube cube)
-        {
-            if (DestoyCount > 0)
-                cube.Shutdown();
-        }
-
         public bool Initialize(Device device, Vector3 scale)
         {
             return base.Initialize(device, "sphere.txt", "bump01.bmp", scale);

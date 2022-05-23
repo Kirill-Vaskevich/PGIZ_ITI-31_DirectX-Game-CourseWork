@@ -76,13 +76,12 @@ namespace DirectLib.System
 
             SphereMoving();
 
-            if (!Graphics.Frame(SpherePosition.GetPosition(), SpherePosition.GetRotation(), CameraPos.GetRotation()))
+            if (!Graphics.Frame(SpherePosition.GetPosition(), CameraPos.GetRotation()))
                 return false;
 
             // Sync & Sphere speed boost
             SpherePosition.SetPosition(SharpDX.Vector3.Zero);
             CameraPos.SetRotation(Graphics.Camera.GetRotation());
-            SpherePosition.SetRotation(Graphics.SphereModel.GetRotation());
             SpherePosition.SphereXSpeed = 0.001f * Math.Abs(CameraPos.GetRotation().Z);
             SpherePosition.SphereZSpeed = 0.001f * Math.Abs(CameraPos.GetRotation().X);
 

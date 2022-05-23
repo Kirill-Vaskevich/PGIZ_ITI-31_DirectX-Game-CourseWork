@@ -17,14 +17,14 @@ namespace DirectLib.Graphics.Models
     {
         // Structures
         [StructLayout(LayoutKind.Sequential)]
-        public struct DModelFormat
+        public struct ModelFormat
         {
             public float x, y, z;
             public float tu, tv;
             public float nx, ny, nz;
         }
         [StructLayout(LayoutKind.Sequential)]
-        internal struct DVertexModel
+        internal struct VertexModel
         {
             public Vector3 position;
             public Vector2 texture;
@@ -37,7 +37,7 @@ namespace DirectLib.Graphics.Models
         private int VertexCount { get; set; }
         public int IndexCount { get; private set; }
         public Texture Texture { get; set; }
-        public DModelFormat[] ModelObject { get; protected set; }
+        public ModelFormat[] ModelObject { get; protected set; }
 
         // Constructor 
         public Model() { }
@@ -72,13 +72,13 @@ namespace DirectLib.Graphics.Models
                 var vertexCountString = lines[0].Split(new char[] { ':' })[1].Trim();
                 VertexCount = int.Parse(vertexCountString);
                 IndexCount = VertexCount;
-                ModelObject = new DModelFormat[VertexCount];
+                ModelObject = new ModelFormat[VertexCount];
 
                 for (var i = 4; i < lines.Count && i < 4 + VertexCount; i++)
                 {
                     var modelArray = lines[i].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-                    ModelObject[i - 4] = new DModelFormat()
+                    ModelObject[i - 4] = new ModelFormat()
                     {
                         x = scale.X * float.Parse(modelArray[0], CultureInfo.GetCultureInfo("En-en")),
                         y = scale.Y * float.Parse(modelArray[1], CultureInfo.GetCultureInfo("En-en")),
@@ -142,13 +142,13 @@ namespace DirectLib.Graphics.Models
             try
             {
                 // Create the vertex array.
-                var vertices = new DVertexModel[VertexCount];
+                var vertices = new VertexModel[VertexCount];
                 // Create the index array.
                 var indices = new int[IndexCount];
 
                 for (var i = 0; i < VertexCount; i++)
                 {
-                    vertices[i] = new DVertexModel()
+                    vertices[i] = new VertexModel()
                     {
                         position = new Vector3(ModelObject[i].x, ModelObject[i].y, ModelObject[i].z),
                         texture = new Vector2(ModelObject[i].tu, ModelObject[i].tv),
@@ -183,7 +183,7 @@ namespace DirectLib.Graphics.Models
         protected void RenderBuffers(SharpDX.Direct3D11.DeviceContext deviceContext)
         {
             // Set the vertex buffer to active in the input assembler so it can be rendered.
-            deviceContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(VertexBuffer, Utilities.SizeOf<DVertexModel>(), 0));
+            deviceContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(VertexBuffer, Utilities.SizeOf<VertexModel>(), 0));
             // Set the index buffer to active in the input assembler so it can be rendered.
             deviceContext.InputAssembler.SetIndexBuffer(IndexBuffer, Format.R32_UInt, 0);
             // Set the type of the primitive that should be rendered from this vertex buffer, in this case triangles.

@@ -6,15 +6,12 @@ namespace DirectLib.Graphics.Input
     public class Transform                  // 172 lines
     {
         // Variables
-        public float Speed { get; private set; }
 
         public float SphereXSpeed { get; set; }
 
         public float SphereZSpeed { get; set; }
 
         public float CameraRotSpeed { get; set; }
-
-        public float SphereRotSpeed { get; set; }
 
         // Properties
         public float X { get; set; }
@@ -27,11 +24,9 @@ namespace DirectLib.Graphics.Input
 
         public Transform()
         {
-            Speed = 0.005f;
             SphereXSpeed = 0f;
             SphereZSpeed = 0f;
             CameraRotSpeed = 0.1f;
-            SphereRotSpeed = 0f;
         }
 
         #region Public Methods Position & Rotation

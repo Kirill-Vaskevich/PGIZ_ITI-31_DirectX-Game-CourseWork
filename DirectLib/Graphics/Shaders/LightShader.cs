@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace DirectLib.Graphics.Shaders
 {
-    public class ShadowShader                  // 343 lines
+    public class LightShader                  // 343 lines
     {
         // Structs
         [StructLayout(LayoutKind.Sequential)]
@@ -44,7 +44,7 @@ namespace DirectLib.Graphics.Shaders
         public SamplerState SamplerStateClamp { get; set; }
 
         // Constructor
-        public ShadowShader() { }
+        public LightShader() { }
 
         // Methods
         public bool Initialize(Device device, IntPtr windowsHandler)

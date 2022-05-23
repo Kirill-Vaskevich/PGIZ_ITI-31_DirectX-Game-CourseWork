@@ -37,7 +37,7 @@ namespace DirectLib.Graphics
 
         #region Shaders
         public DepthShader DepthShader { get; set; }
-        public ShadowShader ShadowShader { get; set; }
+        public LightShader ShadowShader { get; set; }
         #endregion     
 
         #region Variables
@@ -130,7 +130,7 @@ namespace DirectLib.Graphics
 
                 #region Initialize Shaders
                 // Create the shadow shader object.
-                ShadowShader = new ShadowShader();
+                ShadowShader = new LightShader();
 
                 // Initialize the shadow shader object.
                 if (!ShadowShader.Initialize(D3D.Device, windowHandle))
@@ -146,7 +146,7 @@ namespace DirectLib.Graphics
             }
         }
 
-        public bool Frame(Vector3 spherePos, Vector3 sphereRot, Vector3 cameraRot)
+        public bool Frame(Vector3 spherePos, Vector3 cameraRot)
         {
             // Set the rotation of the camera.
             Camera.SetRotation(cameraRot);

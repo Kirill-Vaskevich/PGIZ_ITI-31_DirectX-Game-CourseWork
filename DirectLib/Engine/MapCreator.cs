@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using SharpDX;
 using SharpDX.Direct3D11;
 using DirectLib.Engine.Objects;
@@ -24,9 +20,9 @@ namespace DirectLib.Engine
             { 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1 },
             { 1, 5, 0, 0, 1, 3, 1, 0, 1, 1, 0, 1, 0, 1 },
             { 1, 1, 1, 1, 1, 2, 1, 0, 0, 1, 0, 0, 0, 1 },
-            { 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1 },
-            { 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1 },
-            { 0, 1, 3, 0, 1, 1, 1, 4, 1, 1, 0, 1, 0, 1 },
+            { 2, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1 },
+            { 3, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1 },
+            { 4, 1, 3, 0, 1, 1, 1, 4, 1, 1, 0, 1, 0, 1 },
             { 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1 },
             { 0, 1, 1, 2, 0, 0, 0, 1, 1, 2, 0, 1, 0, 1 },
             { 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
