@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DirectLib.Audio.DXAudio" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAgIAAAAgAAABBAAAABAAAA=</HashCode>
+      <FileName>Audio\DXAudio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Audio.Sound" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAACAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Audio\Sound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Colliders.Collider" Collapsed="true">
+    <Position X="2.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAgAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Colliders\Collider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Colliders.CubeCollider" Collapsed="true">
+    <Position X="5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Colliders\CubeCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Colliders.GroundCollider" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Colliders\GroundCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Colliders.SphereCollider" Collapsed="true">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAIAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Colliders\SphereCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.MapCreator" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAgAAAAAAAAAAAAAIAECAAAgAABAAAAAAAACAA=</HashCode>
+      <FileName>Engine\MapCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Objects.Bonus" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Objects\Bonus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Objects.Cube" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Objects\Cube.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Objects.DestroyBonus" Collapsed="true">
+    <Position X="9.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Objects\DestroyBonus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Objects.Finish" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Objects\Finish.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Objects.GameObject" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACCAAAAQAAAAIAAAAAAAAggQIAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Objects\GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Objects.Ground" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Objects\Ground.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Objects.Sphere" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Objects\Sphere.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Engine.Objects.UnscaleBonus" Collapsed="true">
+    <Position X="7.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Objects\UnscaleBonus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Data.Light" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAkAAAAAEAAggAAAAAAAAgAIgAAAAAAAAAEgAAAI=</HashCode>
+      <FileName>Graphics\Data\Light.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Data.RenderTexture" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAIAQAAAAEAAQAAAAAEAIACAAQAAEAAAAA=</HashCode>
+      <FileName>Graphics\Data\RenderTexture.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Data.Texture" Collapsed="true">
+    <Position X="13.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQACAAAAAAQAAAAAAAAAAAAAAQAAEAA=</HashCode>
+      <FileName>Graphics\Data\Texture.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.DX11" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECAAgAAAAAAAA6AAAYAAAAAAEAAGAIAABAQAAQgAAAg=</HashCode>
+      <FileName>Graphics\DX11.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Graphics" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAAABAIARAQAAAgCAAwAACAACAAIAAFAAQAAAAQE=</HashCode>
+      <FileName>Graphics\Graphics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Input.Input" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAEAAQQAAABAAVAAAGAkAAACAEAAQBAAAAE=</HashCode>
+      <FileName>Graphics\Input\Input.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Input.Transform" Collapsed="true">
+    <Position X="17.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACCCCAEAACAAABAAAAEMAkgIQABAIAIAYAE=</HashCode>
+      <FileName>Graphics\Input\Transform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Models.Camera" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACCAAAEAACAAAAAAAAIAAggAABBAAAAAYAM=</HashCode>
+      <FileName>Graphics\Models\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Models.Model" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAEEAAAAgAAAQAAAAAIEREAAQAAAAAAABIAAACAEAA=</HashCode>
+      <FileName>Graphics\Models\Model.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Shaders.DepthShader" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkAAAAQAAAAAQAgAAAEABAAEAAAAAAIABAAAQAAAAA=</HashCode>
+      <FileName>Graphics\Shaders\DepthShader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.Graphics.Shaders.LightShader" Collapsed="true">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkAAAAQAAAAAQAgAAAEABAAEACAAAAIAhAAIQAAAAQ=</HashCode>
+      <FileName>Graphics\Shaders\LightShader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.System.System" Collapsed="true">
+    <Position X="17.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACACEAQAAAQAAAgAAAAAAmIAEAAAAgAAAAQAMAAE=</HashCode>
+      <FileName>System\System.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.System.SystemConfiguration" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAEMIAACAEAEQAAAAAAAAAACCAAAAAAEA=</HashCode>
+      <FileName>System\SystemConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectLib.System.Timer" Collapsed="true">
+    <Position X="15.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAAQAAAAQAAAAAAAAAAAAAEAAAAAAAAAAAQAAE=</HashCode>
+      <FileName>System\Timer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="DirectLib.Audio.SoundType" Collapsed="true">
+    <Position X="13.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAQAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Audio\SoundType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DirectLib.Engine.Colliders.ColliderType" Collapsed="true">
+    <Position X="12" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Engine\Colliders\ColliderType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

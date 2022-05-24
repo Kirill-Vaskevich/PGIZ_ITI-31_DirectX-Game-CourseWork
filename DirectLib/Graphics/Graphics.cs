@@ -1,14 +1,14 @@
-﻿using DirectLib.Engine;
+﻿using DirectLib.Audio;
+using DirectLib.Engine;
 using DirectLib.Engine.Colliders;
-using DirectLib.Graphics.Models;
+using DirectLib.Engine.Objects;
 using DirectLib.Graphics.Data;
+using DirectLib.Graphics.Models;
 using DirectLib.Graphics.Shaders;
 using DirectLib.System;
 using SharpDX;
 using System;
 using System.Collections.Generic;
-using DirectLib.Engine.Objects;
-using DirectLib.Audio;
 
 namespace DirectLib.Graphics
 {

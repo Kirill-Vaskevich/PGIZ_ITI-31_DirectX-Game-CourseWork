@@ -104,6 +104,7 @@
     <Compile Include="System\Timer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Externals\Shaders\depth.ps" />
     <None Include="Externals\Shaders\depth.vs" />
     <None Include="Externals\Shaders\shadow.ps">
